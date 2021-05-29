@@ -1,0 +1,9 @@
+node_modules
+.DS_Store
+dist
+lib
+*.local
+*.tgz
+.pnpm-debug.log
+.vscode
+coverage

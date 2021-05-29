@@ -1,0 +1,46 @@
+{
+  "name": "react-keyboard-navigator",
+  "version": "0.0.1",
+  "author": "Zheeeng <hi@zheeeng.me>",
+  "description": "A suite of React hook and components which provides an ability to select between your React components with keyboard",
+  "keywords": [
+    "react",
+    "component",
+    "hook",
+    "typescript",
+    "keyboard",
+    "navigator",
+    "arrowKeys",
+    "direction",
+    "vite"
+  ],
+  "repository": "zheeeng/react-keyboard-navigator",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.mjs"
+    },
+    "./README.md": "./README.md",
+    "./package.json": "./package.json",
+    "./*": "./dist/*"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "dev": "pnpm build --watch",
+    "build": "tsup src/index.ts --format cjs,esm --dts --clean"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.14",
+    "tsup": "^6.1.2"
+  },
+  "peerDependencies": {
+    "react": "^16.8.0 || ^17.0.0 || ^18.0.0"
+  }
+}
