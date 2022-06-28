@@ -6,7 +6,7 @@
 ![pages workflow](https://github.com/zheeeng/react-keyboard-navigator/actions/workflows/pages.yml/badge.svg)
 [![npm version](https://img.shields.io/npm/v/react-keyboard-navigator.svg)](https://www.npmjs.com/package/react-keyboard-navigator)
 
-A suite of React hook and components which provides an ability to select between your React components with keyboard.
+A suite of React components and hook that provides an ability to select sibling React components through keyboard interactive.
 
 ## [Demo](https://react-keyboard-navigator.zheeeng.me)
 
@@ -23,9 +23,9 @@ yarn add react-keyboard-navigator (or npm/pnpm)
 import { KeyboardNavigatorBoard, KeyboardNavigatorElement, useKeyboardNavigator } from 'react-keyboard-navigator'
 ```
 
-This suite contains two polymorphic higher-order-component: `KeyboardNavigatorBoard` and `KeyboardNavigatorElement`, the former scopes the control-zone, the latter wraps your selectable component. They both receives a special prop -- `as`, indicates what's the component ultimately rendered as.
+This suite contains two polymorphic higher-order component: `KeyboardNavigatorBoard` and `KeyboardNavigatorElement`, the former scopes the control zone, and the latter wraps your selectable component. They both receive a special prop `as`, which indicates what's the component ultimately rendered as.
 
-There is an another necessary React hook in this suite -- `useKeyboardNavigator`. It returns a `marker` which is used on adhering the `KeyboardNavigatorElement` and `KeyboardNavigator`. By this way the board and elements are grouped.
+There is another necessary React hook in this suite -- `useKeyboardNavigator`. It returns a `marker` which adheres to the `KeyboardNavigatorElement` and `KeyboardNavigator` for connecting them.
 
 ```ts
 const { markRef } = useKeyboardNavigator()
@@ -45,9 +45,9 @@ const { markRef } = useKeyboardNavigator()
 </KeyboardNavigatorElement>
 ```
 
-### Signature
+## Signature
 
-`KeyboardNavigatorBoard`'s `active` state can be controlled by external prop or an internal automatic detecting. If you explicitly passed the `active` prop to it will force this detecting disabled. If you let this `active` prop be omitted, `autoActive` detecting mechanism will be enabled with an initial active state `initialActive`. It is also a polymorphic higher-order-component, so you can pass any props which the as one takes and the base type definition.
+`KeyboardNavigatorBoard`'s `active` state can be driven by an external prop or internal automatic detecting. An explicitly passed `active` prop forces this detection disabled. If you let this `active` prop be omitted, the `autoActive` detecting mechanism will be enabled with an initial active state `initialActive`. It is also a polymorphic higher-order component, so you can pass any props which the as one takes and the base type definition.
 
 ```ts
 type KeyboardNavigatorBoardProps = {
@@ -55,15 +55,15 @@ type KeyboardNavigatorBoardProps = {
     as: React.ElementType,
     active?: boolean,
     // if we explicitly passed the `active` prop, it means the `active` state of KeyboardNavigatorBoard is controlled by external, the `autoActive` prop is forced to `false`.
-    // otherwise, the `autoActive` fallbacks to enabled.
+    // Otherwise, the `autoActive` fallbacks to enabled.
     autoActive?: boolean,
     onAutoActiveChange?: (active: boolean) => void,
-    // if `autoActive` feature enabled, the initial is used to determine the initial active state, it has the default value of `false`
+    // if the `autoActive` feature is enabled, the initial is used to determine the initial active state, it has the default value of `false`
     initialActive?: boolean,
 }
 ```
 
-`KeyboardNavigatorElement` is a active-state-controlled component (see the [controlled component explanation](https://blog.logrocket.com/controlled-vs-uncontrolled-components-in-react/)), and it is polymorphic higher-order-component, also receives any props which the `as` one takes. Therefore it mixes the the base type definition with the `as` one's props:
+`KeyboardNavigatorElement` is a active-state-controlled component (see the [controlled component explanation](https://blog.logrocket.com/controlled-vs-uncontrolled-components-in-react/)), and it is polymorphic higher-order-component, also receives any props which the `as` one takes. Therefore it mixes the base type definition with the `as` one's props:
 
 ```ts
 type KeyboardNavigatorElementProps = {
@@ -83,7 +83,7 @@ import { KeyboardNavigatorBoard, KeyboardNavigatorElement, useKeyboardNavigator 
 
 const Demo = ({ blocks }: Props) => {
    const { markRef } = useKeyboardNavigator({
-      // preventDefault page scrolling when we are using the keyboard to switch the active state between components
+      // prevent the default page scrolling behavior when we are using the keyboard to switch the active state between components
       eventCallback: evt => evt.preventDefault()
    })
 

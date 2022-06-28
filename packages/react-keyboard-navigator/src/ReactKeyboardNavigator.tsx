@@ -36,10 +36,10 @@ export type KeyboardNavigatorBoardProps = {
     as: React.ElementType,
     active?: boolean,
     // if we explicitly passed the `active` prop, it means the `active` state of KeyboardNavigatorBoard is controlled by external, the `autoActive` prop is forced to `false`.
-    // otherwise, the `autoActive` fallbacks to enabled.
+    // Otherwise, the `autoActive` fallbacks to enabled.
     autoActive?: boolean,
     onAutoActiveChange?: (active: boolean) => void,
-    // if `autoActive` feature enabled, the initial is used to determine the initial active state, it has the default value of `false`
+    // if the `autoActive` feature is enabled, the initial is used to determine the initial active state, it has the default value of `false`
     initialActive?: boolean,
 }
 
