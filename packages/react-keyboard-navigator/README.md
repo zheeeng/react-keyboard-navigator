@@ -163,7 +163,7 @@ There are two customizable stuff in keyboard navigation: `distance calculation s
 |                    | DOWN       | 2            |
 |                    | DOWN_RIGHT | 3            |
 
-By default we use the `ArrowDirectionMap`:
+By default we use the `ArrowDirectionMap`.
 
 An valid custom direction could be:
 
@@ -211,7 +211,7 @@ useKeyboardNavigator({
 
 ### Create your own direction mapping
 
-We can create own direction mapping:
+We can create our own direction mapping:
 
 ```ts
 const MyDirectionMapping = {
@@ -222,7 +222,7 @@ const MyDirectionMapping = {
 }
 ```
 
-And there is helper for create `DirectionDetailsMap`:
+Or through a helper for creating `DirectionDetailsMap`:
 
 ```ts
 import { StrategiesHelper } from 'react-keyboard-navigator'
