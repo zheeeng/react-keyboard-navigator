@@ -46,7 +46,7 @@ const { markRef } = useKeyboardNavigator()
 
 ## Signature
 
-`KeyboardNavigatorBoard`'s `active` state can be driven by an external prop or internal automatic detecting. An explicitly passed `active` prop forces this detection disabled. If you let this `active` prop be omitted, the `autoActive` detecting mechanism will be enabled with an initial active state `initialActive`. It is also a polymorphic higher-order component, so you can pass any props which the as one takes and the base type definition.
+`KeyboardNavigatorBoard`'s `active` state can be driven by an external prop or internal automatic detecting. An explicitly passed `active` prop forces this detection disabled. If you let this `active` prop be omitted, the `autoActive` detecting mechanism will be enabled with an initial active state `initialActive`. It is also a polymorphic higher-order component, so you can pass any props which the `as` one takes and the base type definition.
 
 ```ts
 type KeyboardNavigatorBoardProps = {
@@ -76,8 +76,8 @@ type KeyboardNavigatorElementProps = {
 `useKeyboardNavigator` receives:
 
 1. `directionMap` for customize keyboard mapping, see the [Customization](#customization) section for details.
-2. `eventCallback` for catch the active state pass by, if the caller explicitly returns a `false` value means manually prevent this pass by happens.
-3. `rootContainer` for set a always existed and active `KeyboardNavigatorBoard`, e.g. `document.body`. If this option is provided, you don't have to always mark an selectable element through wrapped itself by  `KeyboardNavigatorBoard`.
+2. `eventCallback` for catching the active state pass-by, if the caller explicitly returns a `false` value means manually to prevent this pass-by happening.
+3. `rootContainer` for set a always existed and active `KeyboardNavigatorBoard`, e.g. `document.body`. If this option is provided, you don't have to always mark a selectable element through wrapped itself by  `KeyboardNavigatorBoard`.
 
 ```ts
 type UseKeyboardNavigatorOption = {
@@ -134,7 +134,7 @@ const Demo = ({ blocks }: Props) => {
 There are two customizable stuff in keyboard navigation: `distance calculation strategy` and `direction mapping`.
 
 1. `distance calculation strategy` determines how to calculate the distance between the start point and the specified direction. It support `DISTANCE`、 `PROJECT`、custom calculation method `(distance: number, angleDegree: number) => number`.
-2. `direction mapping` binds the keyboard key to the direction. There are total 8 directions, and there some built-in direction-keyboard mapping has been defined:
+2. `direction mapping` binds the keyboard key to the direction. There are total 8 directions and some built-in direction-keyboard mapping has been defined:
 
 | Group Name         | Direction  | Keyboard Key |
 | ------------------ | ---------- | ------------ |
@@ -268,7 +268,9 @@ import { DirectionMapPresets } from 'react-keyboard-navigator'
 
 <details>
 <summary>See its structure</summary>
-<pre>
+<p>
+
+```json
 Object {
   "ArrowDirectionMap": Object {
     "distance": Object {
@@ -917,7 +919,9 @@ Object {
     },
   },
 }
-</pre>
+```
+
+</p>
 </details>
 
 #### StrategiesHelper
@@ -928,14 +932,18 @@ import { StrategiesHelper } from 'react-keyboard-navigator'
 
 <details>
 <summary>See its structure</summary>
-<pre>
+<p>
+
+```ts
 {
-    distance: (directionMap: DirectionKeyMap | DirectionDetailsMap, keepOrigin?: boolean) => DirectionDetailsMap,
-    project: (directionMap: DirectionKeyMap | DirectionDetailsMap, keepOrigin?: boolean) => DirectionDetailsMap,
-    horizontalProjectFirst: (directionMap: DirectionKeyMap | DirectionDetailsMap, keepOrigin?: boolean) => DirectionDetailsMap,
-    horizontalDistanceFirst: (directionMap: DirectionKeyMap | DirectionDetailsMap, keepOrigin?: boolean) => DirectionDetailsMap,
-    verticalProjectFirst: (directionMap: DirectionKeyMap | DirectionDetailsMap, keepOrigin?: boolean) => DirectionDetailsMap,
-    verticalDistanceFirst: (directionMap: DirectionKeyMap | DirectionDetailsMap, keepOrigin?: boolean) => DirectionDetailsMap,
+  distance: (directionMap: DirectionKeyMap | DirectionDetailsMap, keepOrigin?: boolean) => DirectionDetailsMap,
+  project: (directionMap: DirectionKeyMap | DirectionDetailsMap, keepOrigin?: boolean) => DirectionDetailsMap,
+  horizontalProjectFirst: (directionMap: DirectionKeyMap | DirectionDetailsMap, keepOrigin?: boolean) => DirectionDetailsMap,
+  horizontalDistanceFirst: (directionMap: DirectionKeyMap | DirectionDetailsMap, keepOrigin?: boolean) => DirectionDetailsMap,
+  verticalProjectFirst: (directionMap: DirectionKeyMap | DirectionDetailsMap, keepOrigin?: boolean) => DirectionDetailsMap,
+  verticalDistanceFirst: (directionMap: DirectionKeyMap | DirectionDetailsMap, keepOrigin?: boolean) => DirectionDetailsMap,
 }
-</pre>
+```
+
+</p>
 </details>
