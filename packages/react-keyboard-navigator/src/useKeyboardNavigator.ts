@@ -199,7 +199,7 @@ const elementRegistryWeakMap = new WeakMap<
 
 export type UseKeyboardNavigatorOption = {
     directionMap?: DirectionKeyMap | DirectionDetailsMap
-    eventCallback?: (e: KeyboardEvent, eventInfo: { fromElement: HTMLElement, toElement?: HTMLElement }) => void | false
+    eventCallback?: (e: KeyboardEvent, eventInfo: { fromElement: HTMLElement, toElement: HTMLElement }) => void | false
     rootContainer?: HTMLElement
 }
 
@@ -305,12 +305,14 @@ export const useKeyboardNavigator = ({
                     toElementInfoWithPositionList,
                 )
 
-                const eventInfo = {
-                    fromElement: fromElementInfoWithPosition.element,
-                    toElement: targetElement(direction)[0]?.element,
+                const fromElement = fromElementInfoWithPosition.element
+                const toElement = targetElement(direction)[0]?.element
+
+                if (!toElement) {
+                    return
                 }
 
-                const allowChange = eventCallback?.(e, eventInfo)
+                const allowChange = eventCallback?.(e, { fromElement, toElement })
 
                 if (allowChange !== false) {
                     fromElementInfoWithPosition.setActive(false)
