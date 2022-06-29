@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { createOpaqueTypeConstructor } from './OpaqueType'
 import { useValueGetter } from './useValueGetter'
 import { calculatePositionPoint } from './utils/calculatePositionPoint'
@@ -335,25 +335,25 @@ export const useKeyboardNavigator = ({
 export const useElementRegister = (markRef: RegistrySymbol, activeAction: () => ActiveAction) => {
     const { registerElement } = useMemo(() => elementRegistryWeakMap.get(markRef), [markRef]) ?? {}
 
-    const [elementRef, setElementRef] = useState<HTMLElement | undefined>()
+    const elementRef = useRef<HTMLElement | undefined>()
 
     useEffect(
-        () => elementRef ? registerElement?.(elementRef, activeAction) : undefined,
+        () => elementRef.current ? registerElement?.(elementRef.current, activeAction) : undefined,
         [activeAction, elementRef, registerElement],
     )
 
-    return [elementRef, setElementRef] as [HTMLElement | undefined, (element: HTMLElement) => void]
+    return elementRef
 }
 
 export const useBoardRegister = (markRef: RegistrySymbol, getActive: () => boolean) => {
     const { registerBoard } = useMemo(() => elementRegistryWeakMap.get(markRef), [markRef]) ?? {}
 
-    const [elementRef, setElementRef] = useState<HTMLElement | undefined>()
+    const elementRef = useRef<HTMLElement | undefined>()
 
     useEffect(
-        () => elementRef ? registerBoard?.(elementRef, getActive) : undefined,
+        () => elementRef.current ? registerBoard?.(elementRef.current, getActive) : undefined,
         [elementRef, getActive, registerBoard],
     )
 
-    return [elementRef, setElementRef] as [HTMLElement | undefined, (element: HTMLElement) => void]
+    return elementRef
 }

@@ -21,11 +21,11 @@ export const KeyboardNavigatorElement = React.memo(React.forwardRef<Element | un
     function KeyboardNavigatorElement({ markRef, active = false, onActiveChange = () => {/** pass */}, as: As, ...asProps }, ref) {
         const activeAction = useValueGetter<ActiveAction>([active, onActiveChange])
 
-        const [elementRef, setElementRef] = useElementRegister(markRef, activeAction)
+        const elementRef = useElementRegister(markRef, activeAction)
 
-        useImperativeHandle(ref, () => elementRef)
+        useImperativeHandle(ref, () => elementRef.current)
 
-        return <As {...asProps} ref={setElementRef} />
+        return <As {...asProps} ref={elementRef} />
     }
 )) as Component<KeyboardNavigatorElementProps>
 
@@ -56,7 +56,7 @@ export const KeyboardNavigatorBoard = React.memo(React.forwardRef<Element | unde
 
         const getActive = useValueGetter(fixedActive)
 
-        const [elementRef, setElementRef] = useBoardRegister(markRef, getActive)
+        const elementRef = useBoardRegister(markRef, getActive)
 
         const handleAutoActiveChange = useEvent(
             (newAutoActive: boolean) => {
@@ -65,7 +65,7 @@ export const KeyboardNavigatorBoard = React.memo(React.forwardRef<Element | unde
             } 
         )
 
-        useImperativeHandle(ref, () => elementRef)
+        useImperativeHandle(ref, () => elementRef.current)
 
         useEffect(
             () => {
@@ -80,7 +80,7 @@ export const KeyboardNavigatorBoard = React.memo(React.forwardRef<Element | unde
                         return
                     }
 
-                    if (elementRef === target || elementRef?.contains(target)) {
+                    if (elementRef.current === target || elementRef.current?.contains(target)) {
                         handleAutoActiveChange(true)
                     } else {
                         handleAutoActiveChange(false)
@@ -99,7 +99,7 @@ export const KeyboardNavigatorBoard = React.memo(React.forwardRef<Element | unde
             [elementRef, fixedAutoActive, handleAutoActiveChange],
         )
 
-        return <As {...asProps} ref={setElementRef} />
+        return <As {...asProps} ref={elementRef} />
     }
 )) as Component<KeyboardNavigatorBoardProps>
 
