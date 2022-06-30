@@ -1,4 +1,4 @@
-# [React Keyboard Navigator](https://react-keyboard-navigator.zheeeng.me)
+# :keyboard: [React Keyboard Navigator](https://react-keyboard-navigator.zheeeng.me)
 
 [![NPM](https://nodei.co/npm/react-keyboard-navigator.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/react-keyboard-navigator/)
 
@@ -10,13 +10,13 @@ A suite of React components and hook that provides an ability to select sibling 
 
 ![react-keyboard-navigator](https://user-images.githubusercontent.com/1303154/176628751-dcff5374-5ed3-4556-9b1c-e13a88246e31.png)
 
-## Installation
+## :jigsaw: Installation
 
 ```bash
 yarn add react-keyboard-navigator (or npm/pnpm)
 ```
 
-## Concept
+## :bulb: Concept
 
 ```tsx
 import { KeyboardNavigatorBoard, KeyboardNavigatorElement, useKeyboardNavigator } from 'react-keyboard-navigator'
@@ -44,7 +44,7 @@ const { markRef } = useKeyboardNavigator()
 </KeyboardNavigatorElement>
 ```
 
-## Signature
+## :dizzy: Signature
 
 `KeyboardNavigatorBoard`'s `active` state can be driven by an external prop or internal automatic detecting. An explicitly passed `active` prop forces this detection disabled. If you let this `active` prop be omitted, the `autoActive` detecting mechanism will be enabled with an initial active state `initialActive`. It is also a polymorphic higher-order component, so you can pass any props which the `as` one takes and the base type definition.
 
@@ -89,7 +89,7 @@ type UseKeyboardNavigatorOption = {
 }
 ```
 
-## Example
+## :paperclip: Example
 
 ```tsx
 import { KeyboardNavigatorBoard, KeyboardNavigatorElement, useKeyboardNavigator } from 'react-keyboard-navigator'
@@ -130,7 +130,7 @@ const Demo = ({ blocks }: Props) => {
 
 You can see the live preview here: [Random Placement](https://react-keyboard-navigator.zheeeng.me/#/randomPlacement), and other examples: [Interest Gallery](https://react-keyboard-navigator.zheeeng.me/#/interestGallery), [MacOS Finder](https://react-keyboard-navigator.zheeeng.me/#/macOSFinder)
 
-## Customization
+## Customization :point_down:
 
 There are two customizable stuff in keyboard navigation: `distance calculation strategy` and `direction mapping`.
 
@@ -191,11 +191,11 @@ const ArrowDirectionMapWithVerticalProjectFirstStrategy: DirectionDetailsMap = {
     },
     LEFT: {
         key: 'ArrowLeft',
-        strategy: 'PROJECT',
+        strategy: 'DISTANCE',
     },
     RIGHT: {
         key: 'ArrowRight',
-        strategy: 'PROJECT',
+        strategy: 'DISTANCE',
     }
 }
 ```
