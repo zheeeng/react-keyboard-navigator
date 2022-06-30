@@ -1,4 +1,4 @@
-# React Keyboard Navigator
+# [React Keyboard Navigator](https://react-keyboard-navigator.zheeeng.me)
 
 [![NPM](https://nodei.co/npm/react-keyboard-navigator.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/react-keyboard-navigator/)
 
@@ -8,7 +8,7 @@
 
 A suite of React components and hook that provides an ability to select sibling React components through keyboard interactive.
 
-## [Demo](https://react-keyboard-navigator.zheeeng.me)
+![react-keyboard-navigator](https://user-images.githubusercontent.com/1303154/176628751-dcff5374-5ed3-4556-9b1c-e13a88246e31.png)
 
 ## Installation
 
