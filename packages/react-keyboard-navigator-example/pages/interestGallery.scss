@@ -1,0 +1,66 @@
+.interestGallery {
+    main {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    section {
+        margin: 10px;
+        width: 100%;
+    }
+
+    label {
+        margin-left: 20px;
+        font-weight: bold;
+    }
+
+    input {
+        margin-left: 10px;
+    }
+
+    figure {
+        width: 200px;
+        height: 200px;
+        margin: 20px;
+        background-size: cover;
+        border-radius: 1rem;
+        transition: box-shadow 100ms ease-out;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+    }
+
+    figure:hover {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+        transform: scale(1.02);
+    }
+
+    figure.active {
+        box-shadow: 0 0 20px rgba(255, 0, 0, 0.8);
+        transform: scale(1.02);
+    }
+
+    figcaption {
+        font-size: 1.25em;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: rgba(255, 255, 255, 0.8);
+    }
+
+    figcaption div.text {
+        color: gray;
+    }
+
+    figcaption div.closer {
+        margin-left: 0.5em;
+        cursor: pointer;
+        width: 1.5em;
+        height: 1.5em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}

@@ -1,10 +1,11 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { createOpaqueTypeConstructor } from './OpaqueType'
-import { useValueGetter } from './useValueGetter'
+import { useValueGetter } from './hooks/useValueGetter'
 import { calculatePositionPoint } from './utils/calculatePositionPoint'
 import { groupByDirection } from './utils/groupByDirection'
 import type { DistanceStrategy } from './utils/groupByDirection'
 import { isObject, objectMap } from './utils/helper'
+import { useEvent } from './hooks/useEvent'
 
 type KeyboardDirection = 'UP' | 'DOWN' | 'LEFT' | 'RIGHT' | 'UP_LEFT' | 'UP_RIGHT' | 'DOWN_LEFT' | 'DOWN_RIGHT'
 
@@ -200,12 +201,14 @@ const elementRegistryWeakMap = new WeakMap<
 export type UseKeyboardNavigatorOption = {
     directionMap?: DirectionKeyMap | DirectionDetailsMap
     eventCallback?: (e: KeyboardEvent, eventInfo: { fromElement: HTMLElement, toElement: HTMLElement }) => void | false
+    didChange?: (fromElement: HTMLElement, toElement: HTMLElement) => void
     rootContainer?: HTMLElement
 }
 
 export const useKeyboardNavigator = ({
     directionMap = DirectionMapPresets['ArrowDirectionMap'].verticalProjectFirst,
     eventCallback,
+    didChange = () => {/** pass */},
     rootContainer,
 }: UseKeyboardNavigatorOption = {}): {
     markRef: RegistrySymbol,
@@ -242,6 +245,19 @@ export const useKeyboardNavigator = ({
     )
 
     const getDirectionMap = useValueGetter(directionMap)
+
+    const [eventInfo, setEventInfo] = useState<{ fromElement: HTMLElement, toElement: HTMLElement }>()
+
+    const handleEventInfoUpdate = useEvent(didChange)
+
+    useEffect(
+        () => {
+            if (eventInfo?.fromElement && eventInfo?.toElement) {
+                handleEventInfoUpdate(eventInfo.fromElement, eventInfo.toElement)
+            }
+        },
+        [handleEventInfoUpdate, eventInfo],
+    )
 
     useEffect(
         () => {
@@ -312,11 +328,14 @@ export const useKeyboardNavigator = ({
                     return
                 }
 
-                const allowChange = eventCallback?.(e, { fromElement, toElement })
+                const eventInfo = { fromElement, toElement }
+
+                const allowChange = eventCallback?.(e, eventInfo)
 
                 if (allowChange !== false) {
                     fromElementInfoWithPosition.setActive(false)
                     targetElement(direction)[0]?.setActive(true)
+                    setEventInfo(eventInfo)
                 }
             }
 

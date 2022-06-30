@@ -1,0 +1,249 @@
+.macOSFinder {
+  background-image: url(https://9to5mac.com/wp-content/uploads/sites/6/2018/06/mojave-day.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  padding: 72px 0;
+
+  * {
+    font-family: 'Helvetica', sans-serif;
+    user-select: none;
+  }
+  i.fa-eject {
+    position: absolute;
+    right: 5px;
+
+    padding: 5px 6px;
+    border-radius: 50%;
+  }
+  i.fa-eject:hover {
+    background-color: rgb(100, 100, 100);
+    color: rgb(240, 240, 240) !important;
+  }
+
+  ::-webkit-resizer {
+    z-index: 2;
+  }
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgb(200, 200, 200);
+    border-radius: 5px;
+  }
+  #window {
+    width: 950px;
+    height: 400px;
+    margin: 50px auto;
+    background-color: rgb(240, 240, 240);
+    position: relative;
+
+    border-radius: 5px;
+
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
+
+    resize: horizontal;
+    display: block;
+  }
+  #sidebar {
+    /* Account for border */
+    width: 190px;
+    height: calc(100% - 54px);
+
+    background-color: rgb(240, 240, 240);
+    border-right: 1px solid rgb(216, 216, 216);
+    float: left;
+
+    overflow: auto;
+  }
+  #sidebar ul {
+    padding: 0;
+  }
+  #sidebar ul li {
+    list-style-type: none;
+    padding: 5px 30px 5px 20px;
+    vertical-align: middle;
+
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+
+    position: relative;
+    outline: none;
+  }
+  #sidebar ul li:focus {
+    background-color: rgb(220, 210, 210);
+  }
+  #sidebar ul li.header {
+    padding-left: 10px;
+    color: rgb(130, 130, 130);
+    font-weight: bold;
+    font-size: 14px;
+  }
+  #sidebar ul li i {
+    font-size: 12px;
+    margin-left: 6px;
+    color: rgb(130, 130, 130);
+  }
+  #sidebar ul li i:nth-child(1) {
+    font-size: inherit;
+    margin-right: 10px;
+    margin-left: 0px;
+  }
+  #sidebar ul li > * {
+    vertical-align: middle;
+  }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+
+    margin: 0 auto;
+    float: right;
+  }
+  thead,
+  tbody {
+    width: 100%;
+    position: relative;
+  }
+
+  tbody tr {
+    background-color: white;
+  }
+  td {
+    padding: 5px 10px;
+  }
+  tbody tr:focus {
+    background-color: rgb(65, 150, 255) !important;
+    outline: none;
+  }
+  tbody tr:focus td,
+  tr:focus .icon {
+    color: white !important;
+  }
+  tbody tr:nth-child(odd) {
+    background-color: rgb(245, 245, 245);
+  }
+
+  tbody tr td:nth-child(2),
+  tbody tr td:nth-child(3) {
+    color: rgb(130, 130, 130);
+  }
+
+  thead tr {
+    text-align: left;
+    background-color: rgb(240, 240, 240);
+    border-bottom: 1px solid rgb(216, 216, 216);
+  }
+
+  th {
+    font-weight: normal;
+    padding: 5px 10px;
+  }
+  .th-long {
+    width: 60%;
+  }
+  .th-short {
+    width: 20%;
+  }
+  th:nth-child(1),
+  th:nth-child(2) {
+    border-right: 1px solid rgb(216, 216, 216);
+  }
+
+  .icon {
+    color: rgb(130, 130, 130);
+    padding-right: 10px;
+  }
+
+  img {
+    height: 20px;
+    padding-right: 7px;
+    transform: translateY(-2px);
+  }
+  td > * {
+    vertical-align: middle;
+  }
+  tr.notfolder .icon {
+    visibility: hidden;
+  }
+
+  #menubar,
+  #footer {
+    width: 100%;
+    background-image: linear-gradient(
+      to bottom,
+      rgb(230, 230, 230),
+      rgb(210, 210, 210)
+    );
+
+    border-radius: 5px 5px 0 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 5px 0;
+
+    position: relative;
+
+    border-bottom: 1px solid rgb(216, 216, 216);
+  }
+
+  .circle {
+    display: inline-block;
+    border-radius: 50%;
+    height: 10px;
+    width: 10px;
+    margin: 0 1px;
+
+    border: 1px solid;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    vertical-align: middle;
+  }
+  .circle#red {
+    background-color: rgb(251, 93, 82);
+    border-color: #d64e45;
+  }
+  .circle#yellow {
+    background-color: #fec63f;
+    border-color: #d1a334;
+  }
+  .circle#green {
+    background-color: #31d342;
+    border-color: #28b037;
+  }
+
+  .circle i {
+    font-size: 10px;
+    opacity: 0.5;
+    visibility: hidden;
+  }
+  .circle#green i {
+    font-size: 8px;
+  }
+  #stoplight {
+    position: absolute;
+    left: 10px;
+  }
+  #stoplight:hover .circle i {
+    visibility: visible;
+  }
+
+  #footer {
+    margin: 0 auto;
+    border-radius: 0 0 5px 5px;
+    font-size: 12px;
+    border-top: 1px solid rgb(216, 216, 216);
+    border-bottom: none;
+
+    position: absolute;
+    left: 0;
+    bottom: 0;
+  }
+}

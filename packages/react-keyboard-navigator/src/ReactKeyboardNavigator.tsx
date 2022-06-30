@@ -1,13 +1,14 @@
 import React, { useImperativeHandle, useEffect, useState, useMemo } from 'react'
-import { useEvent } from './useEvent'
+import { useEvent } from './hooks/useEvent'
 import { ActiveAction, RegistrySymbol, useElementRegister, useBoardRegister } from './useKeyboardNavigator'
-import { useValueGetter } from './useValueGetter'
+import { useValueGetter } from './hooks/useValueGetter'
+import { useNextTickCallback } from './hooks/useNextTickCallback'
 
 type Props<T extends React.ElementType, P> = Omit<React.ComponentPropsWithRef<T>, keyof P> & { as: T } & Omit<P, 'as'>
 
 type Component<P> = {
-    <T extends React.ElementType>(props: Props<T, P>): JSX.Element | null;
-    displayName?: string;
+    <T extends React.ElementType>(props: Props<T, P>): JSX.Element | null
+    displayName?: string
 }
 
 export type KeyboardNavigatorElementProps = {
@@ -67,36 +68,58 @@ export const KeyboardNavigatorBoard = React.memo(React.forwardRef<Element | unde
 
         useImperativeHandle(ref, () => elementRef.current)
 
+        const handleActiveElement = useEvent(
+            (htmlElement: HTMLElement) => {
+                if (elementRef.current === htmlElement || elementRef.current?.contains(htmlElement)) {
+                    handleAutoActiveChange(true)
+                } else {
+                    handleAutoActiveChange(false)
+                }
+            }
+        )
+
+        const handleActiveElementNextTick = useNextTickCallback(
+            () => {
+                if (document.activeElement instanceof HTMLElement) {
+                    handleActiveElement(document.activeElement)
+                }
+            }
+        )
+
         useEffect(
             () => {
                 if (!fixedAutoActive) {
                     return
                 }
 
-                function handleFocusOrClick (e: Event) {
-                    const target = e.target
+                function handleActive (e: MouseEvent | FocusEvent) {
+                    console.log('type', e.type)
+                    const targetElement = e.target
 
-                    if (!(target instanceof Node)) {
-                        return
-                    }
-
-                    if (elementRef.current === target || elementRef.current?.contains(target)) {
-                        handleAutoActiveChange(true)
-                    } else {
-                        handleAutoActiveChange(false)
+                    if (targetElement instanceof HTMLElement) {
+                        handleActiveElement(targetElement)
                     }
                 }
 
-                window.addEventListener('click', handleFocusOrClick)
-                window.addEventListener('focus', handleFocusOrClick)
+                function handleKeyDown (e: KeyboardEvent) {
+                    if (e.key === 'Tab') {
+                        return
+                    }
+                    handleActiveElementNextTick()
+                }
+
+                window.addEventListener('click', handleActive)
+                window.addEventListener('focus', handleActive)
+                window.addEventListener('keydown', handleKeyDown)
 
 
                 return () => {
-                    window.removeEventListener('click', handleFocusOrClick)
-                    window.removeEventListener('focus', handleFocusOrClick)
+                    window.removeEventListener('click', handleActive)
+                    window.removeEventListener('focus', handleActive)
+                    window.removeEventListener('keydown', handleKeyDown)
                 }
             },
-            [elementRef, fixedAutoActive, handleAutoActiveChange],
+            [elementRef, fixedAutoActive, handleActiveElement, handleAutoActiveChange],
         )
 
         return <As {...asProps} ref={elementRef} />

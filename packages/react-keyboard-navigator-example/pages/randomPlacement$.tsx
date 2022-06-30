@@ -1,9 +1,10 @@
 /**
- * @title Example
+ * @title Random Placement
+ * @order 1
  */
 import { useState } from 'react'
 import { KeyboardNavigatorBoard, KeyboardNavigatorElement, useKeyboardNavigator } from 'react-keyboard-navigator'
-import './style.css'
+import './randomPlacement.scss'
 
 const textSegments = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'.split(' ')
 
@@ -37,8 +38,7 @@ const Controlled = ({ blocks }: Props) => {
          <div onClick={() => setBoardActive(!boardActive)} style={{ cursor: 'pointer' }}>Active controlled: {boardActive ? '✅' : '❌'}</div>
          <hr />
          <KeyboardNavigatorBoard
-            as="div"
-            className="wrapper"
+            as="main"
             markRef={markRef} active={boardActive}
          >
             {blocks.map((word, index) => (
@@ -68,8 +68,7 @@ const Auto = ({ blocks }: Props) => {
          <div>AutoActive: click or focus this zone actives this board automatically</div>
          <hr />
          <KeyboardNavigatorBoard
-            as="div"
-            className="wrapper"
+            as="main"
             markRef={markRef}
             tabIndex={5}
          >
@@ -88,7 +87,7 @@ const Auto = ({ blocks }: Props) => {
    )
 }
 
-const Example = () => {
+const RandomPlacement = () => {
 
    const [blocks, setBlocks] = useState(
       () => Array.from({ length: genRandom(10) + 5 })
@@ -104,7 +103,7 @@ const Example = () => {
    }
 
    return (
-      <div style={{ padding: 24 }}>
+      <div className="randomPlacement">
          <button onClick={handleAddBlock}>Add Block</button>
          <button onClick={handleDeleteBlock}>Delete Block</button>
          <hr />
@@ -116,4 +115,4 @@ const Example = () => {
    )
 }
 
-export default Example
+export default RandomPlacement

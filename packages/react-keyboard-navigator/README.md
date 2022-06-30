@@ -77,12 +77,14 @@ type KeyboardNavigatorElementProps = {
 
 1. `directionMap` for customize keyboard mapping, see the [Customization](#customization) section for details.
 2. `eventCallback` for catching the active state pass-by, if the caller explicitly returns a `false` value means manually to prevent this pass-by happening.
-3. `rootContainer` for set a always existed and active `KeyboardNavigatorBoard`, e.g. `document.body`. If this option is provided, you don't have to always mark a selectable element through wrapped itself by  `KeyboardNavigatorBoard`.
+3. `didChange` for catching the next tick of active state pass-by, it is convenient to manipulate the related elements, e.g. trigger focus, blur, etc.
+4. `rootContainer` for set a always existed and active `KeyboardNavigatorBoard`, e.g. `document.body`. If this option is provided, you don't have to always mark a selectable element through wrapped itself by  `KeyboardNavigatorBoard`.
 
 ```ts
 type UseKeyboardNavigatorOption = {
     directionMap?: DirectionKeyMap | DirectionDetailsMap
     eventCallback?: (e: KeyboardEvent, eventInfo: { fromElement: HTMLElement, toElement?: HTMLElement }) => void | false
+    didChange?: (fromElement: HTMLElement, toElement: HTMLElement) => void
     rootContainer?: HTMLElement
 }
 ```
@@ -109,8 +111,7 @@ const Demo = ({ blocks }: Props) => {
          <div onClick={() => setBoardActive(!boardActive)} style={{ cursor: 'pointer' }}>Active controlled: {boardActive ? '✅' : '❌'}</div>
          <hr />
          <KeyboardNavigatorBoard
-            as="div"
-            className="wrapper"
+            as="main"
             markRef={markRef} active={boardActive}
          >
             {blocks.map((word, index) => (
