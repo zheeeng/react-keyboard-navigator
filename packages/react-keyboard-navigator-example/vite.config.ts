@@ -10,6 +10,7 @@ export default defineConfig({
     mdx(),
     pages({
       pagesDir: path.join(__dirname, 'pages'),
+      useHashRouter: true,
     }),
   ],
 })

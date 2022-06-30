@@ -91,8 +91,6 @@ type UseKeyboardNavigatorOption = {
 
 ## Example
 
-You can see the live preview here: [link](http://react-keyboard-navigator.zheeeng.me/)
-
 ```tsx
 import { KeyboardNavigatorBoard, KeyboardNavigatorElement, useKeyboardNavigator } from 'react-keyboard-navigator'
 
@@ -129,6 +127,8 @@ const Demo = ({ blocks }: Props) => {
    )
 }
 ```
+
+You can see the live preview here: [Random Placement](https://react-keyboard-navigator.zheeeng.me/#/randomPlacement), and other examples: [Interest Gallery](https://react-keyboard-navigator.zheeeng.me/#/interestGallery), [MacOS Finder](https://react-keyboard-navigator.zheeeng.me/#/macOSFinder)
 
 ## Customization
 
