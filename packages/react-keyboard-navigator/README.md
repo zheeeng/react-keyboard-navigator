@@ -1,4 +1,4 @@
-# :keyboard: [React Keyboard Navigator](https://react-keyboard-navigator.zheeeng.me)
+# ⌨️ [React Keyboard Navigator](https://react-keyboard-navigator.zheeeng.me)
 
 [![NPM](https://nodei.co/npm/react-keyboard-navigator.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/react-keyboard-navigator/)
 
@@ -6,17 +6,17 @@
 ![pages workflow](https://github.com/zheeeng/react-keyboard-navigator/actions/workflows/pages.yml/badge.svg)
 [![npm version](https://img.shields.io/npm/v/react-keyboard-navigator.svg)](https://www.npmjs.com/package/react-keyboard-navigator)
 
-A suite of React components and hook that provides an ability to select sibling React components through keyboard interactive.
+A suite of React components and hook for selecting sibling components through the keyboard.
 
 ![react-keyboard-navigator](https://user-images.githubusercontent.com/1303154/176628751-dcff5374-5ed3-4556-9b1c-e13a88246e31.png)
 
-## :jigsaw: Installation
+## 🧩  Installation
 
 ```bash
 yarn add react-keyboard-navigator (or npm/pnpm)
 ```
 
-## :bulb: Concept
+## 💡 Concept
 
 ```tsx
 import { KeyboardNavigatorBoard, KeyboardNavigatorElement, useKeyboardNavigator } from 'react-keyboard-navigator'
@@ -44,7 +44,7 @@ const { markRef } = useKeyboardNavigator()
 </KeyboardNavigatorElement>
 ```
 
-## :dizzy: Signature
+## 💫 Signature
 
 `KeyboardNavigatorBoard`'s `active` state can be driven by an external prop or internal automatic detecting. An explicitly passed `active` prop forces this detection disabled. If you let this `active` prop be omitted, the `autoActive` detecting mechanism will be enabled with an initial active state `initialActive`. It is also a polymorphic higher-order component, so you can pass any props which the `as` one takes and the base type definition.
 
@@ -89,7 +89,7 @@ type UseKeyboardNavigatorOption = {
 }
 ```
 
-## :paperclip: Example
+## 📎  Example
 
 ```tsx
 import { KeyboardNavigatorBoard, KeyboardNavigatorElement, useKeyboardNavigator } from 'react-keyboard-navigator'
@@ -130,7 +130,7 @@ const Demo = ({ blocks }: Props) => {
 
 You can see the live preview here: [Random Placement](https://react-keyboard-navigator.zheeeng.me/#/randomPlacement), and other examples: [Interest Gallery](https://react-keyboard-navigator.zheeeng.me/#/interestGallery), [MacOS Finder](https://react-keyboard-navigator.zheeeng.me/#/macOSFinder)
 
-## Customization :point_down:
+## Customization 👇
 
 There are two customizable stuff in keyboard navigation: `distance calculation strategy` and `direction mapping`.
 
