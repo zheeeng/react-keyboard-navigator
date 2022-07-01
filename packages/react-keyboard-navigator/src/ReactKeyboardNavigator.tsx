@@ -119,7 +119,7 @@ export const KeyboardNavigatorBoard = React.memo(React.forwardRef<Element | unde
                     window.removeEventListener('keydown', handleKeyDown)
                 }
             },
-            [elementRef, fixedAutoActive, handleActiveElement, handleAutoActiveChange],
+            [elementRef, fixedAutoActive, handleActiveElement, handleActiveElementNextTick, handleAutoActiveChange],
         )
 
         return <As {...asProps} ref={elementRef} />
