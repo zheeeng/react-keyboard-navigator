@@ -1,6 +1,6 @@
 {
   "name": "react-keyboard-navigator",
-  "version": "0.0.7",
+  "version": "0.1.0",
   "author": "Zheeeng <hi@zheeeng.me>",
   "description": "A suite of React components and hook for selecting sibling components through the keyboard.",
   "keywords": [
