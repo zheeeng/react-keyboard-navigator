@@ -3,189 +3,13 @@ import { createOpaqueTypeConstructor } from './OpaqueType'
 import { useValueGetter } from './hooks/useValueGetter'
 import { calculatePositionPoint } from './utils/calculatePositionPoint'
 import { groupByDirection } from './utils/groupByDirection'
-import type { DistanceStrategy } from './utils/groupByDirection'
-import { isObject, objectMap } from './utils/helper'
+import { objectMap } from './utils/helper'
 import { useEvent } from './hooks/useEvent'
+import { DirectionKeyMap, DirectionMap, KeyboardDirection } from './types/type'
+import { DirectionMapPresets } from './helpers/DirectionMapPresets'
+import { StrategiesHelper } from './helpers/StrategiesHelper'
 
-type KeyboardDirection = 'UP' | 'DOWN' | 'LEFT' | 'RIGHT' | 'UP_LEFT' | 'UP_RIGHT' | 'DOWN_LEFT' | 'DOWN_RIGHT'
-
-type DirectionDetails = { key: string, strategy: DistanceStrategy }
-type DirectionKeyMap = Partial<Record<KeyboardDirection, string>>
-type DirectionMap = Partial<Record<KeyboardDirection, DirectionDetails | undefined>>
-
-function isDirectionDetails (testItem: unknown): testItem is DirectionDetails {
-    if (!isObject(testItem)) {
-        return false
-    }
-
-    if (!('key' in testItem) || typeof testItem?.key != 'string') {
-        return false
-    }
-
-    if (!('strategy' in testItem) || typeof testItem.strategy !== 'string' && typeof testItem.strategy !== 'function') {
-        return false
-    }
-
-    return true
-}
-
-const preferredStrategy = 'Cosine'
-
-function normalizeOption (directionMap: DirectionKeyMap | DirectionMap, strategy: (direction: KeyboardDirection, originStrategy?: DistanceStrategy) => DistanceStrategy | undefined): DirectionMap {
-    return objectMap(directionMap, (keyOrDirectionDetails, direction) => {
-        if (typeof keyOrDirectionDetails === 'string') {
-            return {
-                key: keyOrDirectionDetails,
-                strategy: strategy(direction) ?? preferredStrategy,
-            }
-        } else if (isDirectionDetails(keyOrDirectionDetails)) {
-            return {
-                key: keyOrDirectionDetails.key,
-                strategy: strategy(direction, keyOrDirectionDetails.strategy) ?? keyOrDirectionDetails.strategy,
-            }
-        } else {
-            return undefined
-        }
-    })
-}
-
-export const StrategiesHelper = {
-    distance: (directionMap: DirectionKeyMap | DirectionMap, keepOrigin = false): DirectionMap => {
-        return normalizeOption(directionMap, (_, originStrategy) => keepOrigin ? originStrategy ?? 'Distance' : 'Distance') 
-    },
-    cosine: (directionMap: DirectionKeyMap | DirectionMap, keepOrigin = false): DirectionMap => {
-        return normalizeOption(directionMap, (_, originStrategy) => keepOrigin ? originStrategy ?? 'Cosine' :  'Cosine') 
-    },
-    horizontalProjectFirst: (directionMap: DirectionKeyMap | DirectionMap, keepOrigin = false): DirectionMap => {
-        return normalizeOption(directionMap, (direction, originStrategy) => {
-            if (keepOrigin && originStrategy) {
-                return originStrategy
-            }
-
-            switch (direction) {
-                case 'LEFT':
-                case 'RIGHT':
-                case 'UP_RIGHT':
-                case 'UP_LEFT':
-                case 'DOWN_LEFT':
-                case 'DOWN_RIGHT': {
-                    return 'Cosine'
-                }
-            }
-
-            return 'Distance'
-        })
-    },
-    horizontalDistanceFirst: (directionMap: DirectionKeyMap | DirectionMap, keepOrigin = false): DirectionMap => {
-        return normalizeOption(directionMap, (direction, originStrategy) => {
-            if (keepOrigin && originStrategy) {
-                return originStrategy
-            }
-
-            switch (direction) {
-                case 'LEFT':
-                case 'RIGHT':
-                case 'UP_RIGHT':
-                case 'UP_LEFT':
-                case 'DOWN_LEFT':
-                case 'DOWN_RIGHT': {
-                    return 'Distance'
-                }
-            }
-
-            return 'Cosine'
-        })
-    },
-    verticalProjectFirst: (directionMap: DirectionKeyMap | DirectionMap, keepOrigin = false): DirectionMap => {
-        return normalizeOption(directionMap, (direction, originStrategy) => {
-            if (keepOrigin && originStrategy) {
-                return originStrategy
-            }
-
-            switch (direction) {
-                case 'UP':
-                case 'DOWN':
-                case 'UP_RIGHT':
-                case 'UP_LEFT':
-                case 'DOWN_LEFT':
-                case 'DOWN_RIGHT': {
-                    return 'Cosine'
-                }
-            }
-
-            return 'Distance'
-        })
-    },
-    verticalDistanceFirst: (directionMap: DirectionKeyMap | DirectionMap, keepOrigin = false): DirectionMap => {
-        return normalizeOption(directionMap, (direction, originStrategy) => {
-            if (keepOrigin && originStrategy) {
-                return originStrategy
-            }
-
-            switch (direction) {
-                case 'UP':
-                case 'DOWN':
-                case 'UP_RIGHT':
-                case 'UP_LEFT':
-                case 'DOWN_LEFT':
-                case 'DOWN_RIGHT': {
-                    return 'Distance'
-                }
-            }
-
-            return 'Cosine'
-        })
-    },
-}
-
-const ArrowDirectionKeyMap: DirectionKeyMap = {
-    UP: 'ArrowUp',
-    DOWN: 'ArrowDown',
-    LEFT: 'ArrowLeft',
-    RIGHT: 'ArrowRight',
-}
-
-const WASDDirectionKeyMap: DirectionKeyMap = {
-    UP: 'W',
-    DOWN: 'S',
-    LEFT: 'A',
-    RIGHT: 'D',
-}
-
-const IJKLDirectionKeyMap: DirectionKeyMap = {
-    UP: 'I',
-    DOWN: 'k',
-    LEFT: 'J',
-    RIGHT: 'L',
-}
-
-const HJKLDirectionKeyMap: DirectionKeyMap = {
-    UP: 'K',
-    DOWN: 'J',
-    LEFT: 'H',
-    RIGHT: 'L',
-}
-
-const NumPadDirectionKeyMap: DirectionKeyMap = {
-    UP_LEFT: '7',
-    UP: '8',
-    UP_RIGHT: '9',
-    LEFT: '4',
-    RIGHT: '6',
-    DOWN_LEFT: '1',
-    DOWN: '2',
-    DOWN_RIGHT: '3',
-}
-
-export const DirectionMapPresets = {
-    ArrowDirectionMap: objectMap(StrategiesHelper, helper => helper(ArrowDirectionKeyMap)),
-    WASDDirectionMap: objectMap(StrategiesHelper, helper => helper(WASDDirectionKeyMap)),
-    IJKLDirectionMap: objectMap(StrategiesHelper, helper => helper(IJKLDirectionKeyMap)),
-    HJKLDirectionMap: objectMap(StrategiesHelper, helper => helper(HJKLDirectionKeyMap)),
-    NumPadDirectionMap: objectMap(StrategiesHelper, helper => helper(NumPadDirectionKeyMap)),
-}
-
-export type ActiveAction = [active: boolean, handleActiveChange: ((active: boolean) => void)]
+export type ActiveAction = [active: boolean, handleActiveChange: (active: boolean) => void]
 
 const createRegistrySymbol = createOpaqueTypeConstructor(() => new Object())
 export type RegistrySymbol = ReturnType<typeof createRegistrySymbol>
@@ -206,7 +30,7 @@ export type UseKeyboardNavigatorOption = {
 }
 
 export const useKeyboardNavigator = ({
-    directionMap = DirectionMapPresets['ArrowDirectionMap'].verticalProjectFirst,
+    directionMap = DirectionMapPresets.ArrowDirectionMap.secant,
     eventCallback,
     didChange = () => {/** pass */},
     rootContainer,
@@ -264,7 +88,7 @@ export const useKeyboardNavigator = ({
             function handleKeyBoardEvent (e: KeyboardEvent) {
                 const key = e.key
 
-                const lookupMap = StrategiesHelper.verticalProjectFirst(getDirectionMap(), true)
+                const lookupMap = StrategiesHelper.secant(getDirectionMap(), true)
 
                 const direction = (Object.keys(lookupMap) as KeyboardDirection[]).find(direction => lookupMap[direction]?.key === key)
 

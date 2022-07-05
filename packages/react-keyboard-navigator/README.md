@@ -134,7 +134,10 @@ You can see the live preview here: [Random Placement](https://react-keyboard-nav
 
 There are two customizable stuff in keyboard navigation: `distance calculation strategy` and `direction mapping`.
 
-1. `distance calculation strategy` determines how to calculate the distance between the start point and the specified direction. It support `Distance`、 `Cosine`、custom calculation method `(distance: number, angleDegree: number) => number`.
+1. `distance calculation strategy` determines how to calculate the distance between the start point and the specified direction. It support `Distance`、`Secant`、`Cosine`、`Sine`、`Tangent`、custom calculation method `(distance: number, angleDegree: number) => number`.
+
+   ![distance](https://user-images.githubusercontent.com/1303154/177306883-1ffe7039-db9b-4f1b-a503-e2d5048936ef.png)
+
 2. `direction mapping` binds the keyboard key to the direction. There are total 8 directions and some built-in direction-keyboard mapping has been defined:
 
 | Group Name         | Direction  | Keyboard Key |
@@ -207,7 +210,7 @@ import { useKeyboardNavigator, DirectionMapPresets } from 'react-keyboard-naviga
 
 // execute in A Functional React Component
 useKeyboardNavigator({
-    directionMap: DirectionMapPresets.WASDDirectionMap.horizontalProjectFirst
+    directionMap: DirectionMapPresets.WASDDirectionMap.secant
 })
 ```
 
@@ -229,7 +232,7 @@ Or use the `StrategiesHelper` to create a `DirectionMap` which defined with spec
 ```ts
 import { StrategiesHelper } from 'react-keyboard-navigator
 
-const MyDirectionMapping: DirectionMap = StrategiesHelper.horizontalProjectFirst({
+const MyDirectionMapping: DirectionMap = StrategiesHelper.secant({
     UP: 'U',
     DOWN: 'D',
     LEFT: 'L',
@@ -274,61 +277,7 @@ import { DirectionMapPresets } from 'react-keyboard-navigator'
 
 ```json
 Object {
-  "ArrowDirectionKeyMap": Object {
-    "distance": Object {
-      "DOWN": Object {
-        "key": "ArrowDown",
-        "strategy": "Distance",
-      },
-      "LEFT": Object {
-        "key": "ArrowLeft",
-        "strategy": "Distance",
-      },
-      "RIGHT": Object {
-        "key": "ArrowRight",
-        "strategy": "Distance",
-      },
-      "UP": Object {
-        "key": "ArrowUp",
-        "strategy": "Distance",
-      },
-    },
-    "horizontalDistanceFirst": Object {
-      "DOWN": Object {
-        "key": "ArrowDown",
-        "strategy": "Cosine",
-      },
-      "LEFT": Object {
-        "key": "ArrowLeft",
-        "strategy": "Distance",
-      },
-      "RIGHT": Object {
-        "key": "ArrowRight",
-        "strategy": "Distance",
-      },
-      "UP": Object {
-        "key": "ArrowUp",
-        "strategy": "Cosine",
-      },
-    },
-    "horizontalProjectFirst": Object {
-      "DOWN": Object {
-        "key": "ArrowDown",
-        "strategy": "Distance",
-      },
-      "LEFT": Object {
-        "key": "ArrowLeft",
-        "strategy": "Cosine",
-      },
-      "RIGHT": Object {
-        "key": "ArrowRight",
-        "strategy": "Cosine",
-      },
-      "UP": Object {
-        "key": "ArrowUp",
-        "strategy": "Distance",
-      },
-    },
+  "ArrowDirectionMap": Object {
     "cosine": Object {
       "DOWN": Object {
         "key": "ArrowDown",
@@ -347,98 +296,80 @@ Object {
         "strategy": "Cosine",
       },
     },
-    "verticalDistanceFirst": Object {
+    "distance": Object {
       "DOWN": Object {
         "key": "ArrowDown",
         "strategy": "Distance",
       },
       "LEFT": Object {
         "key": "ArrowLeft",
-        "strategy": "Cosine",
+        "strategy": "Distance",
       },
       "RIGHT": Object {
         "key": "ArrowRight",
-        "strategy": "Cosine",
+        "strategy": "Distance",
       },
       "UP": Object {
         "key": "ArrowUp",
         "strategy": "Distance",
       },
     },
-    "verticalProjectFirst": Object {
+    "secant": Object {
       "DOWN": Object {
         "key": "ArrowDown",
-        "strategy": "Cosine",
+        "strategy": "Secant",
       },
       "LEFT": Object {
         "key": "ArrowLeft",
-        "strategy": "Distance",
+        "strategy": "Secant",
       },
       "RIGHT": Object {
         "key": "ArrowRight",
-        "strategy": "Distance",
+        "strategy": "Secant",
       },
       "UP": Object {
         "key": "ArrowUp",
-        "strategy": "Cosine",
+        "strategy": "Secant",
+      },
+    },
+    "sine": Object {
+      "DOWN": Object {
+        "key": "ArrowDown",
+        "strategy": "Sine",
+      },
+      "LEFT": Object {
+        "key": "ArrowLeft",
+        "strategy": "Sine",
+      },
+      "RIGHT": Object {
+        "key": "ArrowRight",
+        "strategy": "Sine",
+      },
+      "UP": Object {
+        "key": "ArrowUp",
+        "strategy": "Sine",
+      },
+    },
+    "tangent": Object {
+      "DOWN": Object {
+        "key": "ArrowDown",
+        "strategy": "Tangent",
+      },
+      "LEFT": Object {
+        "key": "ArrowLeft",
+        "strategy": "Tangent",
+      },
+      "RIGHT": Object {
+        "key": "ArrowRight",
+        "strategy": "Tangent",
+      },
+      "UP": Object {
+        "key": "ArrowUp",
+        "strategy": "Tangent",
       },
     },
   },
-  "HJKLDirectionKeyMap": Object {
-    "distance": Object {
-      "DOWN": Object {
-        "key": "J",
-        "strategy": "Distance",
-      },
-      "LEFT": Object {
-        "key": "H",
-        "strategy": "Distance",
-      },
-      "RIGHT": Object {
-        "key": "L",
-        "strategy": "Distance",
-      },
-      "UP": Object {
-        "key": "K",
-        "strategy": "Distance",
-      },
-    },
-    "horizontalDistanceFirst": Object {
-      "DOWN": Object {
-        "key": "J",
-        "strategy": "Cosine",
-      },
-      "LEFT": Object {
-        "key": "H",
-        "strategy": "Distance",
-      },
-      "RIGHT": Object {
-        "key": "L",
-        "strategy": "Distance",
-      },
-      "UP": Object {
-        "key": "K",
-        "strategy": "Cosine",
-      },
-    },
-    "horizontalProjectFirst": Object {
-      "DOWN": Object {
-        "key": "J",
-        "strategy": "Distance",
-      },
-      "LEFT": Object {
-        "key": "H",
-        "strategy": "Cosine",
-      },
-      "RIGHT": Object {
-        "key": "L",
-        "strategy": "Cosine",
-      },
-      "UP": Object {
-        "key": "K",
-        "strategy": "Distance",
-      },
-    },
+  "HJKLDirectionMap": Object {
     "cosine": Object {
       "DOWN": Object {
         "key": "J",
@@ -457,98 +388,80 @@ Object {
         "strategy": "Cosine",
       },
     },
-    "verticalDistanceFirst": Object {
+    "distance": Object {
       "DOWN": Object {
         "key": "J",
         "strategy": "Distance",
       },
       "LEFT": Object {
         "key": "H",
-        "strategy": "Cosine",
+        "strategy": "Distance",
       },
       "RIGHT": Object {
         "key": "L",
-        "strategy": "Cosine",
+        "strategy": "Distance",
       },
       "UP": Object {
         "key": "K",
         "strategy": "Distance",
       },
     },
-    "verticalProjectFirst": Object {
+    "secant": Object {
       "DOWN": Object {
         "key": "J",
-        "strategy": "Cosine",
+        "strategy": "Secant",
       },
       "LEFT": Object {
         "key": "H",
-        "strategy": "Distance",
+        "strategy": "Secant",
       },
       "RIGHT": Object {
         "key": "L",
-        "strategy": "Distance",
+        "strategy": "Secant",
       },
       "UP": Object {
         "key": "K",
-        "strategy": "Cosine",
+        "strategy": "Secant",
+      },
+    },
+    "sine": Object {
+      "DOWN": Object {
+        "key": "J",
+        "strategy": "Sine",
+      },
+      "LEFT": Object {
+        "key": "H",
+        "strategy": "Sine",
+      },
+      "RIGHT": Object {
+        "key": "L",
+        "strategy": "Sine",
+      },
+      "UP": Object {
+        "key": "K",
+        "strategy": "Sine",
+      },
+    },
+    "tangent": Object {
+      "DOWN": Object {
+        "key": "J",
+        "strategy": "Tangent",
+      },
+      "LEFT": Object {
+        "key": "H",
+        "strategy": "Tangent",
+      },
+      "RIGHT": Object {
+        "key": "L",
+        "strategy": "Tangent",
+      },
+      "UP": Object {
+        "key": "K",
+        "strategy": "Tangent",
       },
     },
   },
-  "IJKLDirectionKeyMap": Object {
-    "distance": Object {
-      "DOWN": Object {
-        "key": "k",
-        "strategy": "Distance",
-      },
-      "LEFT": Object {
-        "key": "J",
-        "strategy": "Distance",
-      },
-      "RIGHT": Object {
-        "key": "L",
-        "strategy": "Distance",
-      },
-      "UP": Object {
-        "key": "I",
-        "strategy": "Distance",
-      },
-    },
-    "horizontalDistanceFirst": Object {
-      "DOWN": Object {
-        "key": "k",
-        "strategy": "Cosine",
-      },
-      "LEFT": Object {
-        "key": "J",
-        "strategy": "Distance",
-      },
-      "RIGHT": Object {
-        "key": "L",
-        "strategy": "Distance",
-      },
-      "UP": Object {
-        "key": "I",
-        "strategy": "Cosine",
-      },
-    },
-    "horizontalProjectFirst": Object {
-      "DOWN": Object {
-        "key": "k",
-        "strategy": "Distance",
-      },
-      "LEFT": Object {
-        "key": "J",
-        "strategy": "Cosine",
-      },
-      "RIGHT": Object {
-        "key": "L",
-        "strategy": "Cosine",
-      },
-      "UP": Object {
-        "key": "I",
-        "strategy": "Distance",
-      },
-    },
+  "IJKLDirectionMap": Object {
     "cosine": Object {
       "DOWN": Object {
         "key": "k",
@@ -567,146 +480,80 @@ Object {
         "strategy": "Cosine",
       },
     },
-    "verticalDistanceFirst": Object {
+    "distance": Object {
       "DOWN": Object {
         "key": "k",
         "strategy": "Distance",
       },
       "LEFT": Object {
         "key": "J",
-        "strategy": "Cosine",
+        "strategy": "Distance",
       },
       "RIGHT": Object {
         "key": "L",
-        "strategy": "Cosine",
+        "strategy": "Distance",
       },
       "UP": Object {
         "key": "I",
         "strategy": "Distance",
       },
     },
-    "verticalProjectFirst": Object {
+    "secant": Object {
       "DOWN": Object {
         "key": "k",
-        "strategy": "Cosine",
+        "strategy": "Secant",
       },
       "LEFT": Object {
         "key": "J",
-        "strategy": "Distance",
+        "strategy": "Secant",
       },
       "RIGHT": Object {
         "key": "L",
-        "strategy": "Distance",
+        "strategy": "Secant",
       },
       "UP": Object {
         "key": "I",
-        "strategy": "Cosine",
+        "strategy": "Secant",
+      },
+    },
+    "sine": Object {
+      "DOWN": Object {
+        "key": "k",
+        "strategy": "Sine",
+      },
+      "LEFT": Object {
+        "key": "J",
+        "strategy": "Sine",
+      },
+      "RIGHT": Object {
+        "key": "L",
+        "strategy": "Sine",
+      },
+      "UP": Object {
+        "key": "I",
+        "strategy": "Sine",
+      },
+    },
+    "tangent": Object {
+      "DOWN": Object {
+        "key": "k",
+        "strategy": "Tangent",
+      },
+      "LEFT": Object {
+        "key": "J",
+        "strategy": "Tangent",
+      },
+      "RIGHT": Object {
+        "key": "L",
+        "strategy": "Tangent",
+      },
+      "UP": Object {
+        "key": "I",
+        "strategy": "Tangent",
       },
     },
   },
-  "NumPadDirectionKeyMap": Object {
-    "distance": Object {
-      "DOWN": Object {
-        "key": "2",
-        "strategy": "Distance",
-      },
-      "DOWN_LEFT": Object {
-        "key": "1",
-        "strategy": "Distance",
-      },
-      "DOWN_RIGHT": Object {
-        "key": "3",
-        "strategy": "Distance",
-      },
-      "LEFT": Object {
-        "key": "4",
-        "strategy": "Distance",
-      },
-      "RIGHT": Object {
-        "key": "6",
-        "strategy": "Distance",
-      },
-      "UP": Object {
-        "key": "8",
-        "strategy": "Distance",
-      },
-      "UP_LEFT": Object {
-        "key": "7",
-        "strategy": "Distance",
-      },
-      "UP_RIGHT": Object {
-        "key": "9",
-        "strategy": "Distance",
-      },
-    },
-    "horizontalDistanceFirst": Object {
-      "DOWN": Object {
-        "key": "2",
-        "strategy": "Cosine",
-      },
-      "DOWN_LEFT": Object {
-        "key": "1",
-        "strategy": "Distance",
-      },
-      "DOWN_RIGHT": Object {
-        "key": "3",
-        "strategy": "Distance",
-      },
-      "LEFT": Object {
-        "key": "4",
-        "strategy": "Distance",
-      },
-      "RIGHT": Object {
-        "key": "6",
-        "strategy": "Distance",
-      },
-      "UP": Object {
-        "key": "8",
-        "strategy": "Cosine",
-      },
-      "UP_LEFT": Object {
-        "key": "7",
-        "strategy": "Distance",
-      },
-      "UP_RIGHT": Object {
-        "key": "9",
-        "strategy": "Distance",
-      },
-    },
-    "horizontalProjectFirst": Object {
-      "DOWN": Object {
-        "key": "2",
-        "strategy": "Distance",
-      },
-      "DOWN_LEFT": Object {
-        "key": "1",
-        "strategy": "Cosine",
-      },
-      "DOWN_RIGHT": Object {
-        "key": "3",
-        "strategy": "Cosine",
-      },
-      "LEFT": Object {
-        "key": "4",
-        "strategy": "Cosine",
-      },
-      "RIGHT": Object {
-        "key": "6",
-        "strategy": "Cosine",
-      },
-      "UP": Object {
-        "key": "8",
-        "strategy": "Distance",
-      },
-      "UP_LEFT": Object {
-        "key": "7",
-        "strategy": "Cosine",
-      },
-      "UP_RIGHT": Object {
-        "key": "9",
-        "strategy": "Cosine",
-      },
-    },
+  "NumPadDirectionMap": Object {
     "cosine": Object {
       "DOWN": Object {
         "key": "2",
@@ -741,7 +588,7 @@ Object {
         "strategy": "Cosine",
       },
     },
-    "verticalDistanceFirst": Object {
+    "distance": Object {
       "DOWN": Object {
         "key": "2",
         "strategy": "Distance",
@@ -756,11 +603,11 @@ Object {
       },
       "LEFT": Object {
         "key": "4",
-        "strategy": "Cosine",
+        "strategy": "Distance",
       },
       "RIGHT": Object {
         "key": "6",
-        "strategy": "Cosine",
+        "strategy": "Distance",
       },
       "UP": Object {
         "key": "8",
@@ -775,96 +622,110 @@ Object {
         "strategy": "Distance",
       },
     },
-    "verticalProjectFirst": Object {
+    "secant": Object {
       "DOWN": Object {
         "key": "2",
-        "strategy": "Cosine",
+        "strategy": "Secant",
       },
       "DOWN_LEFT": Object {
         "key": "1",
-        "strategy": "Cosine",
+        "strategy": "Secant",
       },
       "DOWN_RIGHT": Object {
         "key": "3",
-        "strategy": "Cosine",
+        "strategy": "Secant",
       },
       "LEFT": Object {
         "key": "4",
-        "strategy": "Distance",
+        "strategy": "Secant",
       },
       "RIGHT": Object {
         "key": "6",
-        "strategy": "Distance",
+        "strategy": "Secant",
       },
       "UP": Object {
         "key": "8",
-        "strategy": "Cosine",
+        "strategy": "Secant",
       },
       "UP_LEFT": Object {
         "key": "7",
-        "strategy": "Cosine",
+        "strategy": "Secant",
       },
       "UP_RIGHT": Object {
         "key": "9",
-        "strategy": "Cosine",
+        "strategy": "Secant",
+      },
+    },
+    "sine": Object {
+      "DOWN": Object {
+        "key": "2",
+        "strategy": "Sine",
+      },
+      "DOWN_LEFT": Object {
+        "key": "1",
+        "strategy": "Sine",
+      },
+      "DOWN_RIGHT": Object {
+        "key": "3",
+        "strategy": "Sine",
+      },
+      "LEFT": Object {
+        "key": "4",
+        "strategy": "Sine",
+      },
+      "RIGHT": Object {
+        "key": "6",
+        "strategy": "Sine",
+      },
+      "UP": Object {
+        "key": "8",
+        "strategy": "Sine",
+      },
+      "UP_LEFT": Object {
+        "key": "7",
+        "strategy": "Sine",
+      },
+      "UP_RIGHT": Object {
+        "key": "9",
+        "strategy": "Sine",
+      },
+    },
+    "tangent": Object {
+      "DOWN": Object {
+        "key": "2",
+        "strategy": "Tangent",
+      },
+      "DOWN_LEFT": Object {
+        "key": "1",
+        "strategy": "Tangent",
+      },
+      "DOWN_RIGHT": Object {
+        "key": "3",
+        "strategy": "Tangent",
+      },
+      "LEFT": Object {
+        "key": "4",
+        "strategy": "Tangent",
+      },
+      "RIGHT": Object {
+        "key": "6",
+        "strategy": "Tangent",
+      },
+      "UP": Object {
+        "key": "8",
+        "strategy": "Tangent",
+      },
+      "UP_LEFT": Object {
+        "key": "7",
+        "strategy": "Tangent",
+      },
+      "UP_RIGHT": Object {
+        "key": "9",
+        "strategy": "Tangent",
       },
     },
   },
-  "WASDDirectionKeyMap": Object {
-    "distance": Object {
-      "DOWN": Object {
-        "key": "S",
-        "strategy": "Distance",
-      },
-      "LEFT": Object {
-        "key": "A",
-        "strategy": "Distance",
-      },
-      "RIGHT": Object {
-        "key": "D",
-        "strategy": "Distance",
-      },
-      "UP": Object {
-        "key": "W",
-        "strategy": "Distance",
-      },
-    },
-    "horizontalDistanceFirst": Object {
-      "DOWN": Object {
-        "key": "S",
-        "strategy": "Cosine",
-      },
-      "LEFT": Object {
-        "key": "A",
-        "strategy": "Distance",
-      },
-      "RIGHT": Object {
-        "key": "D",
-        "strategy": "Distance",
-      },
-      "UP": Object {
-        "key": "W",
-        "strategy": "Cosine",
-      },
-    },
-    "horizontalProjectFirst": Object {
-      "DOWN": Object {
-        "key": "S",
-        "strategy": "Distance",
-      },
-      "LEFT": Object {
-        "key": "A",
-        "strategy": "Cosine",
-      },
-      "RIGHT": Object {
-        "key": "D",
-        "strategy": "Cosine",
-      },
-      "UP": Object {
-        "key": "W",
-        "strategy": "Distance",
-      },
-    },
+  "WASDDirectionMap": Object {
     "cosine": Object {
       "DOWN": Object {
         "key": "S",
@@ -883,40 +744,76 @@ Object {
         "strategy": "Cosine",
       },
     },
-    "verticalDistanceFirst": Object {
+    "distance": Object {
       "DOWN": Object {
         "key": "S",
         "strategy": "Distance",
       },
       "LEFT": Object {
         "key": "A",
-        "strategy": "Cosine",
+        "strategy": "Distance",
       },
       "RIGHT": Object {
         "key": "D",
-        "strategy": "Cosine",
+        "strategy": "Distance",
       },
       "UP": Object {
         "key": "W",
         "strategy": "Distance",
       },
     },
-    "verticalProjectFirst": Object {
+    "secant": Object {
       "DOWN": Object {
         "key": "S",
-        "strategy": "Cosine",
+        "strategy": "Secant",
       },
       "LEFT": Object {
         "key": "A",
-        "strategy": "Distance",
+        "strategy": "Secant",
       },
       "RIGHT": Object {
         "key": "D",
-        "strategy": "Distance",
+        "strategy": "Secant",
       },
       "UP": Object {
         "key": "W",
-        "strategy": "Cosine",
+        "strategy": "Secant",
+      },
+    },
+    "sine": Object {
+      "DOWN": Object {
+        "key": "S",
+        "strategy": "Sine",
+      },
+      "LEFT": Object {
+        "key": "A",
+        "strategy": "Sine",
+      },
+      "RIGHT": Object {
+        "key": "D",
+        "strategy": "Sine",
+      },
+      "UP": Object {
+        "key": "W",
+        "strategy": "Sine",
+      },
+    },
+    "tangent": Object {
+      "DOWN": Object {
+        "key": "S",
+        "strategy": "Tangent",
+      },
+      "LEFT": Object {
+        "key": "A",
+        "strategy": "Tangent",
+      },
+      "RIGHT": Object {
+        "key": "D",
+        "strategy": "Tangent",
+      },
+      "UP": Object {
+        "key": "W",
+        "strategy": "Tangent",
       },
     },
   },
@@ -939,11 +836,10 @@ import { StrategiesHelper } from 'react-keyboard-navigator'
 ```ts
 {
   distance: (directionMap: DirectionKeyMap | DirectionMap, keepOrigin?: boolean) => DirectionMap,
+  secant: (directionMap: DirectionKeyMap | DirectionMap, keepOrigin?: boolean) => DirectionMap,
   cosine: (directionMap: DirectionKeyMap | DirectionMap, keepOrigin?: boolean) => DirectionMap,
-  horizontalProjectFirst: (directionMap: DirectionKeyMap | DirectionMap, keepOrigin?: boolean) => DirectionMap,
-  horizontalDistanceFirst: (directionMap: DirectionKeyMap | DirectionMap, keepOrigin?: boolean) => DirectionMap,
-  verticalProjectFirst: (directionMap: DirectionKeyMap | DirectionMap, keepOrigin?: boolean) => DirectionMap,
-  verticalDistanceFirst: (directionMap: DirectionKeyMap | DirectionMap, keepOrigin?: boolean) => DirectionMap,
+  sine: (directionMap: DirectionKeyMap | DirectionMap, keepOrigin?: boolean) => DirectionMap,
+  tangent: (directionMap: DirectionKeyMap | DirectionMap, keepOrigin?: boolean) => DirectionMap,
 }
 ```
 

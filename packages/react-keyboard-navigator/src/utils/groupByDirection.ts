@@ -1,5 +1,6 @@
 import { mod } from './mod'
 import { groupPointsIntoZones } from './groupPointsIntoZones'
+import { DistanceStrategy } from '../types/type'
 
 type Point = { x: number, y: number }
 
@@ -7,15 +8,34 @@ type PointWithPosition<P extends Point> = [point: P, angleDegree: number, distan
 
 type Direction = 'UP' | 'DOWN' | 'LEFT' | 'RIGHT' | 'UP_LEFT' | 'UP_RIGHT' | 'DOWN_LEFT' | 'DOWN_RIGHT'
 
-export type DistanceStrategy = 'Cosine' | 'Distance' | ((distance: number, angleDegree: number) => number)
-
 function calculateDistance (distance: number, angleDegree: number, strategy: DistanceStrategy) {
-    if (strategy === 'Cosine') {
-        return Math.abs(distance / Math.cos(Math.PI * angleDegree / 180))
-    } else if (strategy === 'Distance') {
-        return distance
-    } else {
-        return strategy(distance, angleDegree)
+    switch (strategy) {
+        case 'Distance': {
+            return distance
+        }
+        case 'Secant': {
+            return Math.abs(distance / Math.cos(Math.PI * angleDegree / 180))
+        }
+        case 'Cosine': {
+            return Math.abs(distance * Math.cos(Math.PI * angleDegree / 180))
+        }
+        case 'Sine': {
+            return Math.abs(distance * Math.sin(Math.PI * angleDegree / 180))
+        }
+        case 'Tangent': {
+            return Math.abs(distance * Math.tan(Math.PI * angleDegree / 180))
+        }
+        default: {
+            if (typeof strategy === 'function') {
+                const calculatedDistance = strategy(distance, angleDegree)
+
+                if (typeof calculatedDistance === 'number') {
+                    return calculatedDistance
+                }
+            }
+
+            throw new Error('Invalid strategy')
+        }
     }
 }
 
@@ -25,8 +45,15 @@ function extractSortedPoints <P extends Point> (
     pointWithPositionList: PointWithPosition<P>[]
 ) {
     return pointWithPositionList
-        .map(([point, degree, distance]) => ([point, calculateDistance(distance, degree - directionDegree, pickStrategy)] as [point: P, distance: number]))
-        .sort(([, distanceA], [, distanceB]) =>  distanceA - distanceB)
+        .map(([point, degree, distance]) => ([point, degree, distance, calculateDistance(distance, degree - directionDegree, pickStrategy)] as [point: P, degree: number, distance: number, calculatedDistance: number]))
+        .sort(
+            ([, degreeA, distanceA, calculatedDistanceA], [, degreeB, distanceB, calculatedDistanceB]) => 
+                calculatedDistanceA !== calculatedDistanceB
+                    ? calculatedDistanceA - calculatedDistanceB
+                    : distanceA !==  distanceB
+                        ? distanceA - distanceB
+                        : degreeA - degreeB
+            )
         .map(([point]) => point)
 }
 
