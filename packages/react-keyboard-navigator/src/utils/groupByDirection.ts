@@ -7,12 +7,12 @@ type PointWithPosition<P extends Point> = [point: P, angleDegree: number, distan
 
 type Direction = 'UP' | 'DOWN' | 'LEFT' | 'RIGHT' | 'UP_LEFT' | 'UP_RIGHT' | 'DOWN_LEFT' | 'DOWN_RIGHT'
 
-export type DistanceStrategy = 'PROJECT' | 'DISTANCE' | ((distance: number, angleDegree: number) => number)
+export type DistanceStrategy = 'Cosine' | 'Distance' | ((distance: number, angleDegree: number) => number)
 
 function calculateDistance (distance: number, angleDegree: number, strategy: DistanceStrategy) {
-    if (strategy === 'PROJECT') {
+    if (strategy === 'Cosine') {
         return Math.abs(distance / Math.cos(Math.PI * angleDegree / 180))
-    } else if (strategy === 'DISTANCE') {
+    } else if (strategy === 'Distance') {
         return distance
     } else {
         return strategy(distance, angleDegree)

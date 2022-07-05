@@ -77,12 +77,12 @@ type KeyboardNavigatorElementProps = {
 
 1. `directionMap` for customize keyboard mapping, see the [Customization](#customization) section for details.
 2. `eventCallback` for catching the active state pass-by, if the caller explicitly returns a `false` value means manually to prevent this pass-by happening.
-3. `didChange` for catching the next tick of active state pass-by, it is convenient to manipulate the related elements, e.g. trigger focus, blur, etc.
+3. `didChange` for catching the next tick of active state pass-by, it is convenient to manipulate the relevant elements, e.g. trigger focus, blur, etc.
 4. `rootContainer` for set a always existed and active `KeyboardNavigatorBoard`, e.g. `document.body`. If this option is provided, you don't have to always mark a selectable element through wrapped itself by  `KeyboardNavigatorBoard`.
 
 ```ts
 type UseKeyboardNavigatorOption = {
-    directionMap?: DirectionKeyMap | DirectionDetailsMap
+    directionMap?: DirectionKeyMap | DirectionMap
     eventCallback?: (e: KeyboardEvent, eventInfo: { fromElement: HTMLElement, toElement?: HTMLElement }) => void | false
     didChange?: (fromElement: HTMLElement, toElement: HTMLElement) => void
     rootContainer?: HTMLElement
@@ -134,7 +134,7 @@ You can see the live preview here: [Random Placement](https://react-keyboard-nav
 
 There are two customizable stuff in keyboard navigation: `distance calculation strategy` and `direction mapping`.
 
-1. `distance calculation strategy` determines how to calculate the distance between the start point and the specified direction. It support `DISTANCE`、 `PROJECT`、custom calculation method `(distance: number, angleDegree: number) => number`.
+1. `distance calculation strategy` determines how to calculate the distance between the start point and the specified direction. It support `Distance`、 `Cosine`、custom calculation method `(distance: number, angleDegree: number) => number`.
 2. `direction mapping` binds the keyboard key to the direction. There are total 8 directions and some built-in direction-keyboard mapping has been defined:
 
 | Group Name         | Direction  | Keyboard Key |
@@ -143,7 +143,7 @@ There are two customizable stuff in keyboard navigation: `distance calculation s
 |                    | DOWN       | ArrowDown    |
 |                    | LEFT       | ArrowLeft    |
 |                    | RIGHT      | ArrowRight   |
-| WasdDirectionMap   | UP         | W            |
+| WASDDirectionMap   | UP         | W            |
 |                    | DOWN       | S            |
 |                    | LEFT       | A            |
 |                    | RIGHT      | D            |
@@ -166,10 +166,10 @@ There are two customizable stuff in keyboard navigation: `distance calculation s
 
 By default we use the `ArrowDirectionMap`.
 
-An valid custom direction could be:
+An valid custom direction could be mapping from direction to key:
 
 ```ts
-const ArrowDirectionMap: DirectionKeyMap = {
+const ArrowDirectionKeyMap: DirectionKeyMap = {
     UP: 'ArrowUp',
     DOWN: 'ArrowDown',
     LEFT: 'ArrowLeft',
@@ -177,45 +177,46 @@ const ArrowDirectionMap: DirectionKeyMap = {
 }
 ```
 
-or
+or mapping from direction to key and strategy:
 
 ```ts
-const ArrowDirectionMapWithVerticalProjectFirstStrategy: DirectionDetailsMap = {
+const ArrowDirectionMap: DirectionMap = {
     UP: {
         key: 'ArrowUp',
-        strategy: 'PROJECT',
+        strategy: 'Cosine',
     },
     DOWN: {
         key: 'ArrowDown',
-        strategy: 'PROJECT',
+        strategy: 'Cosine',
     },
     LEFT: {
         key: 'ArrowLeft',
-        strategy: 'DISTANCE',
+        strategy: 'Distance',
     },
     RIGHT: {
         key: 'ArrowRight',
-        strategy: 'DISTANCE',
+        strategy: 'Distance',
     }
 }
 ```
 
-We exported all the built-in direction-keyboard mapping presets. They are grouped by different direction key styles, and there all have subgroups with different strategy scheduling.
-
-First, import `DirectionMapPresets`.  Secondly, use your preferred preset:
+We exported all the built-in direction-keyboard mapping presets. They are grouped by preferences, and there all have subgroups with different strategies.
 
 ```ts
+import { useKeyboardNavigator, DirectionMapPresets } from 'react-keyboard-navigator'
+
+// execute in A Functional React Component
 useKeyboardNavigator({
-    directionMap: DirectionMapPresets.WasdDirectionMap.horizontalProjectFirst
+    directionMap: DirectionMapPresets.WASDDirectionMap.horizontalProjectFirst
 })
 ```
 
 ### Create your own direction mapping
 
-We can create our own direction mapping:
+You can create your own mapping with fallback strategy `Cosine`. e.g.
 
 ```ts
-const MyDirectionMapping = {
+const MyDirectionMapping: DirectionKeyMap = {
     UP: 'U',
     DOWN: 'D',
     LEFT: 'L',
@@ -223,12 +224,12 @@ const MyDirectionMapping = {
 }
 ```
 
-Or through a helper for creating `DirectionDetailsMap`:
+Or use the `StrategiesHelper` to create a `DirectionMap` which defined with specific strategy:
 
 ```ts
-import { StrategiesHelper } from 'react-keyboard-navigator'
+import { StrategiesHelper } from 'react-keyboard-navigator
 
-const MyDirectionMapping = StrategiesHelper.horizontalProjectFirst({
+const MyDirectionMapping: DirectionMap = StrategiesHelper.horizontalProjectFirst({
     UP: 'U',
     DOWN: 'D',
     LEFT: 'L',
@@ -239,14 +240,14 @@ const MyDirectionMapping = StrategiesHelper.horizontalProjectFirst({
 If this `StrategiesHelper` doesn't satisfy your needs, feel free to use your own calculation.
 
 ```ts
-const YourOwnDirection: DirectionDetailsMap = {
+const YourOwnDirection: DirectionMap = {
     UP: {
         key: 'U',
-        strategy: 'PROJECT',
+        strategy: 'Cosine',
     },
     DOWN: {
         key: 'D',
-        strategy: 'PROJECT',
+        strategy: 'Cosine',
     },
     LEFT: {
         key: 'L',
@@ -273,649 +274,649 @@ import { DirectionMapPresets } from 'react-keyboard-navigator'
 
 ```json
 Object {
-  "ArrowDirectionMap": Object {
+  "ArrowDirectionKeyMap": Object {
     "distance": Object {
       "DOWN": Object {
         "key": "ArrowDown",
-        "strategy": "DISTANCE",
+        "strategy": "Distance",
       },
       "LEFT": Object {
         "key": "ArrowLeft",
-        "strategy": "DISTANCE",
+        "strategy": "Distance",
       },
       "RIGHT": Object {
         "key": "ArrowRight",
-        "strategy": "DISTANCE",
+        "strategy": "Distance",
       },
       "UP": Object {
         "key": "ArrowUp",
-        "strategy": "DISTANCE",
+        "strategy": "Distance",
       },
     },
     "horizontalDistanceFirst": Object {
       "DOWN": Object {
         "key": "ArrowDown",
-        "strategy": "PROJECT",
+        "strategy": "Cosine",
       },
       "LEFT": Object {
         "key": "ArrowLeft",
-        "strategy": "DISTANCE",
+        "strategy": "Distance",
       },
       "RIGHT": Object {
         "key": "ArrowRight",
-        "strategy": "DISTANCE",
+        "strategy": "Distance",
       },
       "UP": Object {
         "key": "ArrowUp",
-        "strategy": "PROJECT",
+        "strategy": "Cosine",
       },
     },
     "horizontalProjectFirst": Object {
       "DOWN": Object {
         "key": "ArrowDown",
-        "strategy": "DISTANCE",
+        "strategy": "Distance",
       },
       "LEFT": Object {
         "key": "ArrowLeft",
-        "strategy": "PROJECT",
+        "strategy": "Cosine",
       },
       "RIGHT": Object {
         "key": "ArrowRight",
-        "strategy": "PROJECT",
+        "strategy": "Cosine",
       },
       "UP": Object {
         "key": "ArrowUp",
-        "strategy": "DISTANCE",
+        "strategy": "Distance",
       },
     },
-    "project": Object {
+    "cosine": Object {
       "DOWN": Object {
         "key": "ArrowDown",
-        "strategy": "PROJECT",
+        "strategy": "Cosine",
       },
       "LEFT": Object {
         "key": "ArrowLeft",
-        "strategy": "PROJECT",
+        "strategy": "Cosine",
       },
       "RIGHT": Object {
         "key": "ArrowRight",
-        "strategy": "PROJECT",
+        "strategy": "Cosine",
       },
       "UP": Object {
         "key": "ArrowUp",
-        "strategy": "PROJECT",
+        "strategy": "Cosine",
       },
     },
     "verticalDistanceFirst": Object {
       "DOWN": Object {
         "key": "ArrowDown",
-        "strategy": "DISTANCE",
+        "strategy": "Distance",
       },
       "LEFT": Object {
         "key": "ArrowLeft",
-        "strategy": "PROJECT",
+        "strategy": "Cosine",
       },
       "RIGHT": Object {
         "key": "ArrowRight",
-        "strategy": "PROJECT",
+        "strategy": "Cosine",
       },
       "UP": Object {
         "key": "ArrowUp",
-        "strategy": "DISTANCE",
+        "strategy": "Distance",
       },
     },
     "verticalProjectFirst": Object {
       "DOWN": Object {
         "key": "ArrowDown",
-        "strategy": "PROJECT",
+        "strategy": "Cosine",
       },
       "LEFT": Object {
         "key": "ArrowLeft",
-        "strategy": "DISTANCE",
+        "strategy": "Distance",
       },
       "RIGHT": Object {
         "key": "ArrowRight",
-        "strategy": "DISTANCE",
+        "strategy": "Distance",
       },
       "UP": Object {
         "key": "ArrowUp",
-        "strategy": "PROJECT",
+        "strategy": "Cosine",
       },
     },
   },
-  "HJKLDirectionMap": Object {
+  "HJKLDirectionKeyMap": Object {
     "distance": Object {
       "DOWN": Object {
         "key": "J",
-        "strategy": "DISTANCE",
+        "strategy": "Distance",
       },
       "LEFT": Object {
         "key": "H",
-        "strategy": "DISTANCE",
+        "strategy": "Distance",
       },
       "RIGHT": Object {
         "key": "L",
-        "strategy": "DISTANCE",
+        "strategy": "Distance",
       },
       "UP": Object {
         "key": "K",
-        "strategy": "DISTANCE",
+        "strategy": "Distance",
       },
     },
     "horizontalDistanceFirst": Object {
       "DOWN": Object {
         "key": "J",
-        "strategy": "PROJECT",
+        "strategy": "Cosine",
       },
       "LEFT": Object {
         "key": "H",
-        "strategy": "DISTANCE",
+        "strategy": "Distance",
       },
       "RIGHT": Object {
         "key": "L",
-        "strategy": "DISTANCE",
+        "strategy": "Distance",
       },
       "UP": Object {
         "key": "K",
-        "strategy": "PROJECT",
+        "strategy": "Cosine",
       },
     },
     "horizontalProjectFirst": Object {
       "DOWN": Object {
         "key": "J",
-        "strategy": "DISTANCE",
+        "strategy": "Distance",
       },
       "LEFT": Object {
         "key": "H",
-        "strategy": "PROJECT",
+        "strategy": "Cosine",
       },
       "RIGHT": Object {
         "key": "L",
-        "strategy": "PROJECT",
+        "strategy": "Cosine",
       },
       "UP": Object {
         "key": "K",
-        "strategy": "DISTANCE",
+        "strategy": "Distance",
       },
     },
-    "project": Object {
+    "cosine": Object {
       "DOWN": Object {
         "key": "J",
-        "strategy": "PROJECT",
+        "strategy": "Cosine",
       },
       "LEFT": Object {
         "key": "H",
-        "strategy": "PROJECT",
+        "strategy": "Cosine",
       },
       "RIGHT": Object {
         "key": "L",
-        "strategy": "PROJECT",
+        "strategy": "Cosine",
       },
       "UP": Object {
         "key": "K",
-        "strategy": "PROJECT",
+        "strategy": "Cosine",
       },
     },
     "verticalDistanceFirst": Object {
       "DOWN": Object {
         "key": "J",
-        "strategy": "DISTANCE",
+        "strategy": "Distance",
       },
       "LEFT": Object {
         "key": "H",
-        "strategy": "PROJECT",
+        "strategy": "Cosine",
       },
       "RIGHT": Object {
         "key": "L",
-        "strategy": "PROJECT",
+        "strategy": "Cosine",
       },
       "UP": Object {
         "key": "K",
-        "strategy": "DISTANCE",
+        "strategy": "Distance",
       },
     },
     "verticalProjectFirst": Object {
       "DOWN": Object {
         "key": "J",
-        "strategy": "PROJECT",
+        "strategy": "Cosine",
       },
       "LEFT": Object {
         "key": "H",
-        "strategy": "DISTANCE",
+        "strategy": "Distance",
       },
       "RIGHT": Object {
         "key": "L",
-        "strategy": "DISTANCE",
+        "strategy": "Distance",
       },
       "UP": Object {
         "key": "K",
-        "strategy": "PROJECT",
+        "strategy": "Cosine",
       },
     },
   },
-  "IJKLDirectionMap": Object {
+  "IJKLDirectionKeyMap": Object {
     "distance": Object {
       "DOWN": Object {
         "key": "k",
-        "strategy": "DISTANCE",
+        "strategy": "Distance",
       },
       "LEFT": Object {
         "key": "J",
-        "strategy": "DISTANCE",
+        "strategy": "Distance",
       },
       "RIGHT": Object {
         "key": "L",
-        "strategy": "DISTANCE",
+        "strategy": "Distance",
       },
       "UP": Object {
         "key": "I",
-        "strategy": "DISTANCE",
+        "strategy": "Distance",
       },
     },
     "horizontalDistanceFirst": Object {
       "DOWN": Object {
         "key": "k",
-        "strategy": "PROJECT",
+        "strategy": "Cosine",
       },
       "LEFT": Object {
         "key": "J",
-        "strategy": "DISTANCE",
+        "strategy": "Distance",
       },
       "RIGHT": Object {
         "key": "L",
-        "strategy": "DISTANCE",
+        "strategy": "Distance",
       },
       "UP": Object {
         "key": "I",
-        "strategy": "PROJECT",
+        "strategy": "Cosine",
       },
     },
     "horizontalProjectFirst": Object {
       "DOWN": Object {
         "key": "k",
-        "strategy": "DISTANCE",
+        "strategy": "Distance",
       },
       "LEFT": Object {
         "key": "J",
-        "strategy": "PROJECT",
+        "strategy": "Cosine",
       },
       "RIGHT": Object {
         "key": "L",
-        "strategy": "PROJECT",
+        "strategy": "Cosine",
       },
       "UP": Object {
         "key": "I",
-        "strategy": "DISTANCE",
+        "strategy": "Distance",
       },
     },
-    "project": Object {
+    "cosine": Object {
       "DOWN": Object {
         "key": "k",
-        "strategy": "PROJECT",
+        "strategy": "Cosine",
       },
       "LEFT": Object {
         "key": "J",
-        "strategy": "PROJECT",
+        "strategy": "Cosine",
       },
       "RIGHT": Object {
         "key": "L",
-        "strategy": "PROJECT",
+        "strategy": "Cosine",
       },
       "UP": Object {
         "key": "I",
-        "strategy": "PROJECT",
+        "strategy": "Cosine",
       },
     },
     "verticalDistanceFirst": Object {
       "DOWN": Object {
         "key": "k",
-        "strategy": "DISTANCE",
+        "strategy": "Distance",
       },
       "LEFT": Object {
         "key": "J",
-        "strategy": "PROJECT",
+        "strategy": "Cosine",
       },
       "RIGHT": Object {
         "key": "L",
-        "strategy": "PROJECT",
+        "strategy": "Cosine",
       },
       "UP": Object {
         "key": "I",
-        "strategy": "DISTANCE",
+        "strategy": "Distance",
       },
     },
     "verticalProjectFirst": Object {
       "DOWN": Object {
         "key": "k",
-        "strategy": "PROJECT",
+        "strategy": "Cosine",
       },
       "LEFT": Object {
         "key": "J",
-        "strategy": "DISTANCE",
+        "strategy": "Distance",
       },
       "RIGHT": Object {
         "key": "L",
-        "strategy": "DISTANCE",
+        "strategy": "Distance",
       },
       "UP": Object {
         "key": "I",
-        "strategy": "PROJECT",
+        "strategy": "Cosine",
       },
     },
   },
-  "NumPadDirectionMap": Object {
+  "NumPadDirectionKeyMap": Object {
     "distance": Object {
       "DOWN": Object {
         "key": "2",
-        "strategy": "DISTANCE",
+        "strategy": "Distance",
       },
       "DOWN_LEFT": Object {
         "key": "1",
-        "strategy": "DISTANCE",
+        "strategy": "Distance",
       },
       "DOWN_RIGHT": Object {
         "key": "3",
-        "strategy": "DISTANCE",
+        "strategy": "Distance",
       },
       "LEFT": Object {
         "key": "4",
-        "strategy": "DISTANCE",
+        "strategy": "Distance",
       },
       "RIGHT": Object {
         "key": "6",
-        "strategy": "DISTANCE",
+        "strategy": "Distance",
       },
       "UP": Object {
         "key": "8",
-        "strategy": "DISTANCE",
+        "strategy": "Distance",
       },
       "UP_LEFT": Object {
         "key": "7",
-        "strategy": "DISTANCE",
+        "strategy": "Distance",
       },
       "UP_RIGHT": Object {
         "key": "9",
-        "strategy": "DISTANCE",
+        "strategy": "Distance",
       },
     },
     "horizontalDistanceFirst": Object {
       "DOWN": Object {
         "key": "2",
-        "strategy": "PROJECT",
+        "strategy": "Cosine",
       },
       "DOWN_LEFT": Object {
         "key": "1",
-        "strategy": "DISTANCE",
+        "strategy": "Distance",
       },
       "DOWN_RIGHT": Object {
         "key": "3",
-        "strategy": "DISTANCE",
+        "strategy": "Distance",
       },
       "LEFT": Object {
         "key": "4",
-        "strategy": "DISTANCE",
+        "strategy": "Distance",
       },
       "RIGHT": Object {
         "key": "6",
-        "strategy": "DISTANCE",
+        "strategy": "Distance",
       },
       "UP": Object {
         "key": "8",
-        "strategy": "PROJECT",
+        "strategy": "Cosine",
       },
       "UP_LEFT": Object {
         "key": "7",
-        "strategy": "DISTANCE",
+        "strategy": "Distance",
       },
       "UP_RIGHT": Object {
         "key": "9",
-        "strategy": "DISTANCE",
+        "strategy": "Distance",
       },
     },
     "horizontalProjectFirst": Object {
       "DOWN": Object {
         "key": "2",
-        "strategy": "DISTANCE",
+        "strategy": "Distance",
       },
       "DOWN_LEFT": Object {
         "key": "1",
-        "strategy": "PROJECT",
+        "strategy": "Cosine",
       },
       "DOWN_RIGHT": Object {
         "key": "3",
-        "strategy": "PROJECT",
+        "strategy": "Cosine",
       },
       "LEFT": Object {
         "key": "4",
-        "strategy": "PROJECT",
+        "strategy": "Cosine",
       },
       "RIGHT": Object {
         "key": "6",
-        "strategy": "PROJECT",
+        "strategy": "Cosine",
       },
       "UP": Object {
         "key": "8",
-        "strategy": "DISTANCE",
+        "strategy": "Distance",
       },
       "UP_LEFT": Object {
         "key": "7",
-        "strategy": "PROJECT",
+        "strategy": "Cosine",
       },
       "UP_RIGHT": Object {
         "key": "9",
-        "strategy": "PROJECT",
+        "strategy": "Cosine",
       },
     },
-    "project": Object {
+    "cosine": Object {
       "DOWN": Object {
         "key": "2",
-        "strategy": "PROJECT",
+        "strategy": "Cosine",
       },
       "DOWN_LEFT": Object {
         "key": "1",
-        "strategy": "PROJECT",
+        "strategy": "Cosine",
       },
       "DOWN_RIGHT": Object {
         "key": "3",
-        "strategy": "PROJECT",
+        "strategy": "Cosine",
       },
       "LEFT": Object {
         "key": "4",
-        "strategy": "PROJECT",
+        "strategy": "Cosine",
       },
       "RIGHT": Object {
         "key": "6",
-        "strategy": "PROJECT",
+        "strategy": "Cosine",
       },
       "UP": Object {
         "key": "8",
-        "strategy": "PROJECT",
+        "strategy": "Cosine",
       },
       "UP_LEFT": Object {
         "key": "7",
-        "strategy": "PROJECT",
+        "strategy": "Cosine",
       },
       "UP_RIGHT": Object {
         "key": "9",
-        "strategy": "PROJECT",
+        "strategy": "Cosine",
       },
     },
     "verticalDistanceFirst": Object {
       "DOWN": Object {
         "key": "2",
-        "strategy": "DISTANCE",
+        "strategy": "Distance",
       },
       "DOWN_LEFT": Object {
         "key": "1",
-        "strategy": "DISTANCE",
+        "strategy": "Distance",
       },
       "DOWN_RIGHT": Object {
         "key": "3",
-        "strategy": "DISTANCE",
+        "strategy": "Distance",
       },
       "LEFT": Object {
         "key": "4",
-        "strategy": "PROJECT",
+        "strategy": "Cosine",
       },
       "RIGHT": Object {
         "key": "6",
-        "strategy": "PROJECT",
+        "strategy": "Cosine",
       },
       "UP": Object {
         "key": "8",
-        "strategy": "DISTANCE",
+        "strategy": "Distance",
       },
       "UP_LEFT": Object {
         "key": "7",
-        "strategy": "DISTANCE",
+        "strategy": "Distance",
       },
       "UP_RIGHT": Object {
         "key": "9",
-        "strategy": "DISTANCE",
+        "strategy": "Distance",
       },
     },
     "verticalProjectFirst": Object {
       "DOWN": Object {
         "key": "2",
-        "strategy": "PROJECT",
+        "strategy": "Cosine",
       },
       "DOWN_LEFT": Object {
         "key": "1",
-        "strategy": "PROJECT",
+        "strategy": "Cosine",
       },
       "DOWN_RIGHT": Object {
         "key": "3",
-        "strategy": "PROJECT",
+        "strategy": "Cosine",
       },
       "LEFT": Object {
         "key": "4",
-        "strategy": "DISTANCE",
+        "strategy": "Distance",
       },
       "RIGHT": Object {
         "key": "6",
-        "strategy": "DISTANCE",
+        "strategy": "Distance",
       },
       "UP": Object {
         "key": "8",
-        "strategy": "PROJECT",
+        "strategy": "Cosine",
       },
       "UP_LEFT": Object {
         "key": "7",
-        "strategy": "PROJECT",
+        "strategy": "Cosine",
       },
       "UP_RIGHT": Object {
         "key": "9",
-        "strategy": "PROJECT",
+        "strategy": "Cosine",
       },
     },
   },
-  "WasdDirectionMap": Object {
+  "WASDDirectionKeyMap": Object {
     "distance": Object {
       "DOWN": Object {
         "key": "S",
-        "strategy": "DISTANCE",
+        "strategy": "Distance",
       },
       "LEFT": Object {
         "key": "A",
-        "strategy": "DISTANCE",
+        "strategy": "Distance",
       },
       "RIGHT": Object {
         "key": "D",
-        "strategy": "DISTANCE",
+        "strategy": "Distance",
       },
       "UP": Object {
         "key": "W",
-        "strategy": "DISTANCE",
+        "strategy": "Distance",
       },
     },
     "horizontalDistanceFirst": Object {
       "DOWN": Object {
         "key": "S",
-        "strategy": "PROJECT",
+        "strategy": "Cosine",
       },
       "LEFT": Object {
         "key": "A",
-        "strategy": "DISTANCE",
+        "strategy": "Distance",
       },
       "RIGHT": Object {
         "key": "D",
-        "strategy": "DISTANCE",
+        "strategy": "Distance",
       },
       "UP": Object {
         "key": "W",
-        "strategy": "PROJECT",
+        "strategy": "Cosine",
       },
     },
     "horizontalProjectFirst": Object {
       "DOWN": Object {
         "key": "S",
-        "strategy": "DISTANCE",
+        "strategy": "Distance",
       },
       "LEFT": Object {
         "key": "A",
-        "strategy": "PROJECT",
+        "strategy": "Cosine",
       },
       "RIGHT": Object {
         "key": "D",
-        "strategy": "PROJECT",
+        "strategy": "Cosine",
       },
       "UP": Object {
         "key": "W",
-        "strategy": "DISTANCE",
+        "strategy": "Distance",
       },
     },
-    "project": Object {
+    "cosine": Object {
       "DOWN": Object {
         "key": "S",
-        "strategy": "PROJECT",
+        "strategy": "Cosine",
       },
       "LEFT": Object {
         "key": "A",
-        "strategy": "PROJECT",
+        "strategy": "Cosine",
       },
       "RIGHT": Object {
         "key": "D",
-        "strategy": "PROJECT",
+        "strategy": "Cosine",
       },
       "UP": Object {
         "key": "W",
-        "strategy": "PROJECT",
+        "strategy": "Cosine",
       },
     },
     "verticalDistanceFirst": Object {
       "DOWN": Object {
         "key": "S",
-        "strategy": "DISTANCE",
+        "strategy": "Distance",
       },
       "LEFT": Object {
         "key": "A",
-        "strategy": "PROJECT",
+        "strategy": "Cosine",
       },
       "RIGHT": Object {
         "key": "D",
-        "strategy": "PROJECT",
+        "strategy": "Cosine",
       },
       "UP": Object {
         "key": "W",
-        "strategy": "DISTANCE",
+        "strategy": "Distance",
       },
     },
     "verticalProjectFirst": Object {
       "DOWN": Object {
         "key": "S",
-        "strategy": "PROJECT",
+        "strategy": "Cosine",
       },
       "LEFT": Object {
         "key": "A",
-        "strategy": "DISTANCE",
+        "strategy": "Distance",
       },
       "RIGHT": Object {
         "key": "D",
-        "strategy": "DISTANCE",
+        "strategy": "Distance",
       },
       "UP": Object {
         "key": "W",
-        "strategy": "PROJECT",
+        "strategy": "Cosine",
       },
     },
   },
@@ -937,12 +938,12 @@ import { StrategiesHelper } from 'react-keyboard-navigator'
 
 ```ts
 {
-  distance: (directionMap: DirectionKeyMap | DirectionDetailsMap, keepOrigin?: boolean) => DirectionDetailsMap,
-  project: (directionMap: DirectionKeyMap | DirectionDetailsMap, keepOrigin?: boolean) => DirectionDetailsMap,
-  horizontalProjectFirst: (directionMap: DirectionKeyMap | DirectionDetailsMap, keepOrigin?: boolean) => DirectionDetailsMap,
-  horizontalDistanceFirst: (directionMap: DirectionKeyMap | DirectionDetailsMap, keepOrigin?: boolean) => DirectionDetailsMap,
-  verticalProjectFirst: (directionMap: DirectionKeyMap | DirectionDetailsMap, keepOrigin?: boolean) => DirectionDetailsMap,
-  verticalDistanceFirst: (directionMap: DirectionKeyMap | DirectionDetailsMap, keepOrigin?: boolean) => DirectionDetailsMap,
+  distance: (directionMap: DirectionKeyMap | DirectionMap, keepOrigin?: boolean) => DirectionMap,
+  cosine: (directionMap: DirectionKeyMap | DirectionMap, keepOrigin?: boolean) => DirectionMap,
+  horizontalProjectFirst: (directionMap: DirectionKeyMap | DirectionMap, keepOrigin?: boolean) => DirectionMap,
+  horizontalDistanceFirst: (directionMap: DirectionKeyMap | DirectionMap, keepOrigin?: boolean) => DirectionMap,
+  verticalProjectFirst: (directionMap: DirectionKeyMap | DirectionMap, keepOrigin?: boolean) => DirectionMap,
+  verticalDistanceFirst: (directionMap: DirectionKeyMap | DirectionMap, keepOrigin?: boolean) => DirectionMap,
 }
 ```
 

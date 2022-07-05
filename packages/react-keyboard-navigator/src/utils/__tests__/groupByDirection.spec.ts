@@ -13,8 +13,8 @@ describe('test groupByDirection cases not care about the calculation mode', () =
     test('throw error when try get an invalid direction', () => {
         const groupBy = groupByDirection(
             {
-                UP: 'DISTANCE', UP_RIGHT: 'DISTANCE', RIGHT: 'DISTANCE', DOWN_RIGHT: 'DISTANCE',
-                DOWN: 'PROJECT', DOWN_LEFT: 'PROJECT', LEFT: 'PROJECT', UP_LEFT: 'PROJECT',
+                UP: 'Distance', UP_RIGHT: 'Distance', RIGHT: 'Distance', DOWN_RIGHT: 'Distance',
+                DOWN: 'Cosine', DOWN_LEFT: 'Cosine', LEFT: 'Cosine', UP_LEFT: 'Cosine',
             },
             testPoints.centerPoint,
             testPointsList,
@@ -44,13 +44,13 @@ function createTestInput (groupBy: ReturnType<typeof groupByDirection>) {
     }
 }
 
-describe('test groupByDirection in `DISTANCE` calculation mode', () => {
+describe('test groupByDirection in `Distance` calculation mode', () => {
 
     test('points are groupBy by 8 directions and sorted in ascending distance', () => {
         const groupBy = groupByDirection(
             {
-                UP: 'DISTANCE', UP_RIGHT: 'DISTANCE', RIGHT: 'DISTANCE', DOWN_RIGHT: 'DISTANCE',
-                DOWN: 'DISTANCE', DOWN_LEFT: 'DISTANCE', LEFT: 'DISTANCE', UP_LEFT: 'DISTANCE',
+                UP: 'Distance', UP_RIGHT: 'Distance', RIGHT: 'Distance', DOWN_RIGHT: 'Distance',
+                DOWN: 'Distance', DOWN_LEFT: 'Distance', LEFT: 'Distance', UP_LEFT: 'Distance',
             },
             testPoints.centerPoint,
             testPointsList,
@@ -71,8 +71,8 @@ describe('test groupByDirection in `DISTANCE` calculation mode', () => {
     test('points are groupBy by 4 directions and sorted in ascending distance', () => {
         const groupBy = groupByDirection(
             {
-                UP: 'DISTANCE', RIGHT: 'DISTANCE',
-                DOWN: 'DISTANCE', LEFT: 'DISTANCE',
+                UP: 'Distance', RIGHT: 'Distance',
+                DOWN: 'Distance', LEFT: 'Distance',
             },
             testPoints.centerPoint,
             testPointsList,
@@ -93,8 +93,8 @@ describe('test groupByDirection in `DISTANCE` calculation mode', () => {
     test('points are groupBy by 4 directions and sorted in ascending distance (2)', () => {
         const groupBy = groupByDirection(
             {
-                UP_RIGHT: 'DISTANCE', DOWN_RIGHT: 'DISTANCE',
-                DOWN_LEFT: 'DISTANCE', UP_LEFT: 'DISTANCE',
+                UP_RIGHT: 'Distance', DOWN_RIGHT: 'Distance',
+                DOWN_LEFT: 'Distance', UP_LEFT: 'Distance',
             },
             testPoints.centerPoint,
             testPointsList,
@@ -115,7 +115,7 @@ describe('test groupByDirection in `DISTANCE` calculation mode', () => {
     test('points are groupBy by 4 directions and sorted in ascending distance (3)', () => {
         const groupBy = groupByDirection(
             {
-                DOWN: 'DISTANCE', DOWN_LEFT: 'DISTANCE', LEFT: 'DISTANCE', UP_LEFT: 'DISTANCE',
+                DOWN: 'Distance', DOWN_LEFT: 'Distance', LEFT: 'Distance', UP_LEFT: 'Distance',
             },
             testPoints.centerPoint,
             testPointsList,
@@ -136,8 +136,8 @@ describe('test groupByDirection in `DISTANCE` calculation mode', () => {
     test('points are groupBy by 4 directions and sorted in ascending distance (4)', () => {
         const groupBy = groupByDirection(
             {
-                UP: 'DISTANCE', UP_RIGHT: 'DISTANCE',
-                DOWN: 'DISTANCE', DOWN_LEFT: 'DISTANCE',
+                UP: 'Distance', UP_RIGHT: 'Distance',
+                DOWN: 'Distance', DOWN_LEFT: 'Distance',
             },
             testPoints.centerPoint,
             testPointsList,
@@ -158,7 +158,7 @@ describe('test groupByDirection in `DISTANCE` calculation mode', () => {
     test('points are groupBy by 2 directions and sorted in ascending distance', () => {
         const groupBy = groupByDirection(
             {
-                UP: 'DISTANCE', DOWN: 'DISTANCE',
+                UP: 'Distance', DOWN: 'Distance',
             },
             testPoints.centerPoint,
             testPointsList,
@@ -179,7 +179,7 @@ describe('test groupByDirection in `DISTANCE` calculation mode', () => {
     test('points are groupBy by 2 directions and sorted in ascending distance', () => {
         const groupBy = groupByDirection(
             {
-                UP: 'DISTANCE', RIGHT: 'DISTANCE',
+                UP: 'Distance', RIGHT: 'Distance',
             },
             testPoints.centerPoint,
             testPointsList,
@@ -200,7 +200,7 @@ describe('test groupByDirection in `DISTANCE` calculation mode', () => {
     test('points are groupBy by 1 direction and sorted in ascending distance', () => {
         const groupBy = groupByDirection(
             {
-                UP: 'DISTANCE',
+                UP: 'Distance',
             },
             testPoints.centerPoint,
             testPointsList,
@@ -219,13 +219,13 @@ describe('test groupByDirection in `DISTANCE` calculation mode', () => {
     })
 })
 
-describe('test groupByDirection in `PROJECT` calculation mode', () => {
+describe('test groupByDirection in `Cosine` calculation mode', () => {
 
     test('points are groupBy by 8 directions and sorted in ascending distance', () => {
         const groupBy = groupByDirection(
             {
-                UP: 'PROJECT', UP_RIGHT: 'PROJECT', RIGHT: 'PROJECT', DOWN_RIGHT: 'PROJECT',
-                DOWN: 'PROJECT', DOWN_LEFT: 'PROJECT', LEFT: 'PROJECT', UP_LEFT: 'PROJECT',
+                UP: 'Cosine', UP_RIGHT: 'Cosine', RIGHT: 'Cosine', DOWN_RIGHT: 'Cosine',
+                DOWN: 'Cosine', DOWN_LEFT: 'Cosine', LEFT: 'Cosine', UP_LEFT: 'Cosine',
             },
             testPoints.centerPoint,
             testPointsList,
@@ -243,11 +243,11 @@ describe('test groupByDirection in `PROJECT` calculation mode', () => {
         })
     })
 
-    test('points are groupBy by 4 directions and sorted in ascending PROJECT', () => {
+    test('points are groupBy by 4 directions and sorted in ascending Cosine', () => {
         const groupBy = groupByDirection(
             {
-                UP: 'PROJECT', RIGHT: 'PROJECT',
-                DOWN: 'PROJECT', LEFT: 'PROJECT',
+                UP: 'Cosine', RIGHT: 'Cosine',
+                DOWN: 'Cosine', LEFT: 'Cosine',
             },
             testPoints.centerPoint,
             testPointsList,
@@ -265,11 +265,11 @@ describe('test groupByDirection in `PROJECT` calculation mode', () => {
         })
     })
 
-    test('points are groupBy by 4 directions and sorted in ascending PROJECT (2)', () => {
+    test('points are groupBy by 4 directions and sorted in ascending Cosine (2)', () => {
         const groupBy = groupByDirection(
             {
-                UP_RIGHT: 'PROJECT', DOWN_RIGHT: 'PROJECT',
-                DOWN_LEFT: 'PROJECT', UP_LEFT: 'PROJECT',
+                UP_RIGHT: 'Cosine', DOWN_RIGHT: 'Cosine',
+                DOWN_LEFT: 'Cosine', UP_LEFT: 'Cosine',
             },
             testPoints.centerPoint,
             testPointsList,
@@ -287,10 +287,10 @@ describe('test groupByDirection in `PROJECT` calculation mode', () => {
         })
     })
 
-    test('points are groupBy by 4 directions and sorted in ascending PROJECT (3)', () => {
+    test('points are groupBy by 4 directions and sorted in ascending Cosine (3)', () => {
         const groupBy = groupByDirection(
             {
-                DOWN: 'PROJECT', DOWN_LEFT: 'PROJECT', LEFT: 'PROJECT', UP_LEFT: 'PROJECT',
+                DOWN: 'Cosine', DOWN_LEFT: 'Cosine', LEFT: 'Cosine', UP_LEFT: 'Cosine',
             },
             testPoints.centerPoint,
             testPointsList,
@@ -308,11 +308,11 @@ describe('test groupByDirection in `PROJECT` calculation mode', () => {
         })
     })
 
-    test('points are groupBy by 4 directions and sorted in ascending PROJECT (4)', () => {
+    test('points are groupBy by 4 directions and sorted in ascending Cosine (4)', () => {
         const groupBy = groupByDirection(
             {
-                UP: 'PROJECT', UP_RIGHT: 'PROJECT',
-                DOWN: 'PROJECT', DOWN_LEFT: 'PROJECT',
+                UP: 'Cosine', UP_RIGHT: 'Cosine',
+                DOWN: 'Cosine', DOWN_LEFT: 'Cosine',
             },
             testPoints.centerPoint,
             testPointsList,
@@ -330,10 +330,10 @@ describe('test groupByDirection in `PROJECT` calculation mode', () => {
         })
     })
 
-    test('points are groupBy by 2 directions and sorted in ascending PROJECT', () => {
+    test('points are groupBy by 2 directions and sorted in ascending Cosine', () => {
         const groupBy = groupByDirection(
             {
-                UP: 'PROJECT', DOWN: 'PROJECT',
+                UP: 'Cosine', DOWN: 'Cosine',
             },
             testPoints.centerPoint,
             testPointsList,
@@ -351,10 +351,10 @@ describe('test groupByDirection in `PROJECT` calculation mode', () => {
         })
     })
 
-    test('points are groupBy by 2 directions and sorted in ascending PROJECT', () => {
+    test('points are groupBy by 2 directions and sorted in ascending Cosine', () => {
         const groupBy = groupByDirection(
             {
-                UP: 'PROJECT', RIGHT: 'PROJECT',
+                UP: 'Cosine', RIGHT: 'Cosine',
             },
             testPoints.centerPoint,
             testPointsList,
@@ -372,10 +372,10 @@ describe('test groupByDirection in `PROJECT` calculation mode', () => {
         })
     })
 
-    test('points are groupBy by 1 direction and sorted in ascending PROJECT', () => {
+    test('points are groupBy by 1 direction and sorted in ascending Cosine', () => {
         const groupBy = groupByDirection(
             {
-                UP: 'PROJECT',
+                UP: 'Cosine',
             },
             testPoints.centerPoint,
             testPointsList,
