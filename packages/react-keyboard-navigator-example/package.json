@@ -1,6 +1,5 @@
 {
   "name": "react-keyboard-navigator-example",
-  "version": "1.0.3",
   "private": true,
   "scripts": {
     "dev": "vite serve",
