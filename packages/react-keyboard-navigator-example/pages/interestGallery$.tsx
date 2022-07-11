@@ -1,6 +1,6 @@
 /**
  * @title Interest Gallery
- * @order 2
+ * @order 3
  */
 import { useState, useMemo } from 'react'
 import { KeyboardNavigatorBoard, KeyboardNavigatorElement, useKeyboardNavigator } from 'react-keyboard-navigator'
@@ -44,9 +44,13 @@ const InterestGallery = () => {
     return (
         <div className="interestGallery">
             <KeyboardNavigatorBoard as="main" markRef={markRef}>
-                <section>
-                    <label>Add new interest:</label>
-                    <input onKeyDown={handleAddInterest}></input>
+                <section className="simple-style">
+                    <section>
+                        <label>
+                            Add new interest:
+                            <input onKeyDown={handleAddInterest}></input>
+                        </label>
+                    </section>
                 </section>
 
                 {sortedInterests.map(interest => (

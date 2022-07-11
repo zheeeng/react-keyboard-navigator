@@ -1,4 +1,5 @@
 import { createTheme } from 'vite-pages-theme-doc'
+import './page.scss'
 
 export default createTheme({
   logo: '⌨ React Keyboard Navigator',

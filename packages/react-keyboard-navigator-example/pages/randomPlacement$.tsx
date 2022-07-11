@@ -104,9 +104,11 @@ const RandomPlacement = () => {
 
    return (
       <div className="randomPlacement">
-         <button onClick={handleAddBlock}>Add Block</button>
-         <button onClick={handleDeleteBlock}>Delete Block</button>
-         <hr />
+         <div className="simple-style">
+            <button onClick={handleAddBlock}>Add Block</button>
+            <button onClick={handleDeleteBlock}>Delete Block</button>
+            <hr />
+         </div>
          <div className="comparison">
             <Controlled blocks={blocks} />
             <Auto blocks={blocks} />

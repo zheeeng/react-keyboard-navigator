@@ -14,7 +14,8 @@
     "react-keyboard-navigator": "workspace:*",
     "react-router-dom": "^5.3.3",
     "sass": "^1.53.0",
-    "scroll-into-view-if-needed": "^2.2.29"
+    "scroll-into-view-if-needed": "^2.2.29",
+    "styled-css-base": "^0.0.6"
   },
   "devDependencies": {
     "@types/node": "^18.0.0",
