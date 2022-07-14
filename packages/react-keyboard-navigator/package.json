@@ -37,8 +37,8 @@
     "build": "tsup src/index.ts --format cjs,esm --dts --clean"
   },
   "devDependencies": {
-    "@types/react": "^18.0.14",
-    "tsup": "^6.1.2"
+    "@types/react": "^18.0.15",
+    "tsup": "^6.1.3"
   },
   "peerDependencies": {
     "react": "^16.8.0 || ^17.0.0 || ^18.0.0"
