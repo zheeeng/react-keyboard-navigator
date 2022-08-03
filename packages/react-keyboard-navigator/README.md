@@ -75,8 +75,8 @@ type KeyboardNavigatorElementProps = {
 
 `useKeyboardNavigator` receives:
 
-1. `directionMap` for customize keyboard mapping, see the [Customization](#customization) section for details.
-2. `eventCallback` for catching the active state pass-by, if the caller explicitly returns a `false` value means manually to prevent this pass-by happening.
+1. `directionMap` for customize keyboard mapping. See the [Customization](#customization) section for details.
+2. `eventCallback` for catching the active state transition, if the caller explicitly returns a `false` value means manually to prevent this pass-by happening. See the [Signature](#signature-of-customization-stuff) section for more about built-in event callback presets.
 3. `didChange` for catching the next tick of active state pass-by, it is convenient to manipulate the relevant elements, e.g. trigger focus, blur, etc.
 4. `rootContainer` for set a always existed and active `KeyboardNavigatorBoard`, e.g. `document.body`. If this option is provided, you don't have to always mark a selectable element through wrapped itself by  `KeyboardNavigatorBoard`.
 
@@ -264,6 +264,20 @@ const YourOwnDirection: DirectionMap = {
 ```
 
 ### Signature of Customization stuff
+
+#### EventCallbackPresets
+
+This presets includes some common event callbacks.
+
+```ts
+import { EventCallbackPresets } from 'react-keyboard-navigator'
+```
+
+* `DirectionMapPresets.preventDefault`: prevent the default behavior of the event, usually is used for prevent from page scrolling when navigating.
+* `DirectionMapPresets.stopPropagation`: stop propagation of the event, usually is used for prevent conflicts  with topper DOM's listeners.
+* `DirectionMapPresets.stopImmediatePropagation`: same to `stopPropagation`, but stop the event propagation immediately.
+* `DirectionMapPresets.stopOnActiveInputElement`: stop navigating when the current active element is an input element.
+* `DirectionMapPresets.stopOnActiveInputElementAndPreventDefault`: same to `stopOnActiveInputElement`, but also prevent the default behavior of the event.
 
 #### DirectionMapPresets
 
