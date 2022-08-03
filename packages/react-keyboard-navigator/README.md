@@ -24,7 +24,7 @@ import { KeyboardNavigatorBoard, KeyboardNavigatorElement, useKeyboardNavigator 
 
 This suite contains two polymorphic higher-order component: `KeyboardNavigatorBoard` and `KeyboardNavigatorElement`, the former scopes the control zone, and the latter wraps your selectable component. They both receive a special prop `as`, which indicates what's the component ultimately rendered as.
 
-There is another necessary React hook in this suite -- `useKeyboardNavigator`. It returns a `marker` which adheres to the `KeyboardNavigatorElement` and `KeyboardNavigator` for connecting them.
+There is another necessary React hook in this suite -- `useKeyboardNavigator`. It returns a `marker` which adheres to the `KeyboardNavigatorBoard` and `KeyboardNavigatorElement` for connecting them.
 
 ```ts
 const { markRef } = useKeyboardNavigator()
