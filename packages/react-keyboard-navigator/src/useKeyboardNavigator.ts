@@ -86,6 +86,10 @@ export const useKeyboardNavigator = ({
     useEffect(
         () => {
             function handleKeyBoardEvent (e: KeyboardEvent) {
+                if (document.activeElement !== document.body) {
+                    return
+                }
+
                 const key = e.key
 
                 const lookupMap = StrategiesHelper.secant(getDirectionMap(), true)
@@ -163,10 +167,10 @@ export const useKeyboardNavigator = ({
                 }
             }
 
-            window.addEventListener('keydown', handleKeyBoardEvent)
+            document.body.addEventListener('keydown', handleKeyBoardEvent)
 
             return () => {
-                window.removeEventListener('keydown', handleKeyBoardEvent)
+                document.body.removeEventListener('keydown', handleKeyBoardEvent)
             }
         },
         [activeActionRegistry, directionMap, elementManageBoardRegistry, eventCallback, getDirectionMap, rootContainer],

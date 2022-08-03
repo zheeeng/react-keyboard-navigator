@@ -93,7 +93,6 @@ export const KeyboardNavigatorBoard = React.memo(React.forwardRef<Element | unde
                 }
 
                 function handleActive (e: MouseEvent | FocusEvent) {
-                    console.log('type', e.type)
                     const targetElement = e.target
 
                     if (targetElement instanceof HTMLElement) {
@@ -108,15 +107,15 @@ export const KeyboardNavigatorBoard = React.memo(React.forwardRef<Element | unde
                     handleActiveElementNextTick()
                 }
 
-                window.addEventListener('click', handleActive)
-                window.addEventListener('focus', handleActive)
-                window.addEventListener('keydown', handleKeyDown)
+                document.body.addEventListener('click', handleActive)
+                document.body.addEventListener('focus', handleActive)
+                document.body.addEventListener('keydown', handleKeyDown)
 
 
                 return () => {
-                    window.removeEventListener('click', handleActive)
-                    window.removeEventListener('focus', handleActive)
-                    window.removeEventListener('keydown', handleKeyDown)
+                    document.body.removeEventListener('click', handleActive)
+                    document.body.removeEventListener('focus', handleActive)
+                    document.body.removeEventListener('keydown', handleKeyDown)
                 }
             },
             [elementRef, fixedAutoActive, handleActiveElement, handleActiveElementNextTick, handleAutoActiveChange],
