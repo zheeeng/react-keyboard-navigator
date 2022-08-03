@@ -7,7 +7,7 @@ import { objectMap } from './utils/helper'
 import { useEvent } from './hooks/useEvent'
 import { DirectionKeyMap, DirectionMap, KeyboardDirection } from './types/type'
 import { DirectionMapPresets } from './helpers/DirectionMapPresets'
-import { EventCallbackPresets } from './helpers/eventCallbackPresets'
+import { EventCallbackPresets } from './helpers/EventCallbackPresets'
 import { StrategiesHelper } from './helpers/StrategiesHelper'
 
 export type ActiveAction = [active: boolean, handleActiveChange: (active: boolean) => void]
