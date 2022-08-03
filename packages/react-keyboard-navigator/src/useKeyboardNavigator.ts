@@ -7,6 +7,7 @@ import { objectMap } from './utils/helper'
 import { useEvent } from './hooks/useEvent'
 import { DirectionKeyMap, DirectionMap, KeyboardDirection } from './types/type'
 import { DirectionMapPresets } from './helpers/DirectionMapPresets'
+import { EventCallbackPresets } from './helpers/eventCallbackPresets'
 import { StrategiesHelper } from './helpers/StrategiesHelper'
 
 export type ActiveAction = [active: boolean, handleActiveChange: (active: boolean) => void]
@@ -31,7 +32,7 @@ export type UseKeyboardNavigatorOption = {
 
 export const useKeyboardNavigator = ({
     directionMap = DirectionMapPresets.ArrowDirectionMap.secant,
-    eventCallback,
+    eventCallback = EventCallbackPresets.stopOnActiveInputElementAndPreventDefault,
     didChange = () => {/** pass */},
     rootContainer,
 }: UseKeyboardNavigatorOption = {}): {
@@ -70,26 +71,11 @@ export const useKeyboardNavigator = ({
 
     const getDirectionMap = useValueGetter(directionMap)
 
-    const [eventInfo, setEventInfo] = useState<{ fromElement: HTMLElement, toElement: HTMLElement }>()
-
-    const handleEventInfoUpdate = useEvent(didChange)
+    const handleEventInfoDidUpdate = useEvent(didChange)
 
     useEffect(
         () => {
-            if (eventInfo?.fromElement && eventInfo?.toElement) {
-                handleEventInfoUpdate(eventInfo.fromElement, eventInfo.toElement)
-            }
-        },
-        [handleEventInfoUpdate, eventInfo],
-    )
-
-    useEffect(
-        () => {
-            function handleKeyBoardEvent (e: KeyboardEvent) {
-                if (document.activeElement !== document.body) {
-                    return
-                }
-
+            function handleKeydown (e: KeyboardEvent) {
                 const key = e.key
 
                 const lookupMap = StrategiesHelper.secant(getDirectionMap(), true)
@@ -163,17 +149,17 @@ export const useKeyboardNavigator = ({
                 if (allowChange !== false) {
                     fromElementInfoWithPosition.setActive(false)
                     targetElement(direction)[0]?.setActive(true)
-                    setEventInfo(eventInfo)
+                    handleEventInfoDidUpdate(fromElement, toElement)
                 }
             }
 
-            document.body.addEventListener('keydown', handleKeyBoardEvent)
+            document.body.addEventListener('keydown', handleKeydown)
 
             return () => {
-                document.body.removeEventListener('keydown', handleKeyBoardEvent)
+                document.body.removeEventListener('keydown', handleKeydown)
             }
         },
-        [activeActionRegistry, directionMap, elementManageBoardRegistry, eventCallback, getDirectionMap, rootContainer],
+        [activeActionRegistry, directionMap, elementManageBoardRegistry, eventCallback, getDirectionMap, handleEventInfoDidUpdate, rootContainer],
     )
 
     return { markRef }

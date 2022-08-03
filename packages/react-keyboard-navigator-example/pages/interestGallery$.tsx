@@ -35,7 +35,6 @@ const InterestGallery = () => {
 
     const { markRef } = useKeyboardNavigator({
         rootContainer: document.body,
-        eventCallback: evt => evt.preventDefault(),
         didChange: (_, toElement) => scrollIntoViewIfNeeded(toElement, { scrollMode: 'if-needed', behavior: 'smooth', block: 'nearest' })
     })
 

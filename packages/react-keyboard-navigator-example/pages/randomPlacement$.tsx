@@ -57,9 +57,7 @@ const Controlled = ({ blocks }: Props) => {
 }
 
 const Auto = ({ blocks }: Props) => {
-   const { markRef } = useKeyboardNavigator({
-      eventCallback: evt => evt.preventDefault()
-   })
+   const { markRef } = useKeyboardNavigator()
 
    const [highlightBlockIndex, setHighlightBockIndex] = useState(0)
 

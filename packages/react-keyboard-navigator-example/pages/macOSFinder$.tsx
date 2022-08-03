@@ -2,10 +2,11 @@
  * @title MacOS Finder
  * @order 2
  */
- import React, { useState } from 'react'
- import { KeyboardNavigatorBoard, KeyboardNavigatorElement, useKeyboardNavigator } from 'react-keyboard-navigator'
- import 'https://kit.fontawesome.com/921bd8fdbd.js'
- import './macOSFinder.scss'
+
+import React, { useState } from 'react'
+import { KeyboardNavigatorBoard, KeyboardNavigatorElement, useKeyboardNavigator } from 'react-keyboard-navigator'
+import 'https://kit.fontawesome.com/921bd8fdbd.js'
+import './macOSFinder.scss'
 import { Badge } from '../components/badge'
 
  const InterestGallery = () => {
@@ -14,7 +15,8 @@ import { Badge } from '../components/badge'
     const handleActive = (event: React.MouseEvent<HTMLElement> | React.FocusEvent<HTMLElement>) => setActiveElementId(event.currentTarget.dataset['refId'])
 
     const { markRef: folderMarkRef } = useKeyboardNavigator({
-        eventCallback: ((_, { toElement }) => {
+        eventCallback: ((evt, { toElement }) => {
+            evt.preventDefault()
             setActiveElementId(toElement.dataset['refId'])
             toElement.focus()
         })
