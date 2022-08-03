@@ -11,15 +11,11 @@
     }
 
     figure {
-        width: 200px;
-        height: 200px;
+        position: relative;
         margin: 20px;
-        background-size: cover;
         border-radius: 1rem;
         transition: box-shadow 100ms ease-out;
         cursor: pointer;
-        display: flex;
-        align-items: center;
     }
 
     figure:hover {
@@ -32,9 +28,19 @@
         transform: scale(1.02);
     }
 
+    figure img {
+        width: unset !important;
+        height: unset !important;
+        max-width: unset !important;
+        max-height: unset !important;
+    }
+
     figcaption {
-        font-size: 1.25em;
+        position: absolute;
+        top: 50%;
+        left: 0;
         width: 100%;
+        font-size: 1.25em;
         display: flex;
         justify-content: center;
         align-items: center;

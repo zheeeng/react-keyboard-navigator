@@ -57,10 +57,10 @@ const InterestGallery = () => {
                     <KeyboardNavigatorElement
                         as="figure" markRef={markRef} key={interest}
                         className={interest === activePictureName ? 'active' : ''}
-                        style={{ backgroundImage: `url(https://source.unsplash.com/random/200x200/?${interest})` }}
                         onClick={() => setActivePictureName(interest) }
                         active={interest === activePictureName} onActiveChange={() => setActivePictureName(interest)}
                     >
+                        <img src={`https://source.unsplash.com/random/200x200/?${interest}`} width="200" height="200" loading="lazy" alt={interest}/>
                         <figcaption>
                             <div className="text">{interest}</div>
                             <div  className="closer" onClick={() => handleRemoveInterest(interest)}>❌</div>
