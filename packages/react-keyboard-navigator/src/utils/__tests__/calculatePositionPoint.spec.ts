@@ -1,13 +1,19 @@
+import { describe, test, expect, beforeAll, afterAll, vi, type SpyInstance } from 'vitest'
+
+/**
+ * @vitest-environment jsdom
+ */
+
 import { calculatePositionPoint } from '../calculatePositionPoint'
 
 describe('calculatePositionPoint gets a tuple of center points [x, y]', () => {
     let element: HTMLDivElement
-    let spy: jest.SpyInstance<DOMRect, []>
+    let spy: SpyInstance<[], DOMRect>
 
     beforeAll(() => {
         element = document.createElement('div')
 
-        spy = jest.spyOn(element, 'getBoundingClientRect').mockReturnValue({
+        spy = vi.spyOn(element, 'getBoundingClientRect').mockReturnValue({
             bottom: 60,
             height: 60,
             left: 60,
