@@ -1,3 +1,4 @@
+import { describe, test, expect } from 'vitest'
 import { DirectionMapPresets } from '../DirectionMapPresets'
 
 describe('test DirectionMapPresets data structure', () => {

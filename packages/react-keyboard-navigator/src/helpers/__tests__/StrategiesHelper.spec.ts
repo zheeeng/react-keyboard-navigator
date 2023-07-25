@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+import { describe, test, expect } from 'vitest'
 import { StrategiesHelper } from '../StrategiesHelper'
 
 describe('test StrategiesHelper data structure', () => {
