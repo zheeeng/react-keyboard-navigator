@@ -1,3 +1,4 @@
+import { describe, test, expect } from 'vitest'
 import { groupPointsIntoZones } from '../groupPointsIntoZones'
 import { testPoints, testPointsList } from './points.data'
 

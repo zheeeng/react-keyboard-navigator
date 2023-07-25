@@ -1,3 +1,4 @@
+import { describe, test, expect } from 'vitest'
 import { mod } from '../mod'
 
 describe('mod compacts in a numbers loop with specify lowerBound(inclusively) and upperBound(inclusively)', () => {

@@ -1,5 +1,5 @@
+import { describe, test, expect } from 'vitest'
 import { groupByDirection } from '../groupByDirection'
-
 import { testPoints, testPointsList } from './points.data'
 
 const {
