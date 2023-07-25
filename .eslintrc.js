@@ -14,7 +14,7 @@ module.exports = {
     browser: true,
     node: true,
   },
-  ignorePatterns: ['**/node_modules', '**/dist', '*.js'],
+  ignorePatterns: ['**/node_modules', "*.spec.ts", '**/dist', '*.js'],
   extends: [
     'eslint:recommended',
     'plugin:react/recommended',
